@@ -1,0 +1,685 @@
+\section{List of Abbreviation}
+
+\DTLsort{abbr}{acronyms}
+
+% Abbreviation Table
+\begin{center}
+  \begin{tabular}{l l}
+    \textbf{Abbreviation} & \textbf{Full Form} \\
+    \midrule
+    \DTLforeach{acronyms}{\abbr=abbr,\full=full}{%
+      \abbr & \full \\%
+    }
+  \end{tabular}
+\end{center}
+
+\newpage
+
+\section{Fuzzy Inference System}
+\label{apdx:fis_rules}
+
+% Membership functions
+\begin{longtable}[c]{l}
+  \caption{Membership Function for Antecedent and Consequent
+  \label{tab:membership_fuc}}\\
+
+  \endfirsthead
+ 
+  \multicolumn{1}{l}{\textit{Continuation of Table \ref{tab:membership_fuc}}}\\
+  \endhead
+  
+  \midrule
+  \multicolumn{1}{r}{\textit{Continued on next page}} \\
+  \endfoot
+ 
+  \bottomrule
+  \endlastfoot
+
+  \toprule
+  \multicolumn{1}{c}{\textbf{Input Variables (Antecedents)}} \\
+  \midrule
+
+  \multicolumn{1}{l}{\textbf{Age}: 0 = 0--15, 1 = 16--29, 2 = 30--49, 3 = 50+} \\[0.1em]
+  age[\textit{child}] = fuzz.trimf(age.universe, [0, 0, 1]) \\
+  age[\textit{young\_adult}] = fuzz.trimf(age.universe, [0, 1, 2]) \\
+  age[\textit{adult}] = fuzz.trimf(age.universe, [1, 2, 3]) \\
+  age[\textit{senior}] = fuzz.trimf(age.universe, [2, 3, 3]) \\
+  \midrule
+
+  \multicolumn{1}{l}{\textbf{Sex}: 0 = Female, 1 = Male} \\[0.2em]
+  sex[\textit{female}] = fuzz.trimf(sex.universe, [0, 0, 1]) \\
+  sex[\textit{male}] = fuzz.trimf(sex.universe, [0, 1, 1]) \\
+  \midrule
+
+  \multicolumn{1}{l}{\textbf{Marital Status}: 0 = Single, 1 = Married, 2 = Divorced/Widowed} \\[0.1em]
+  marital\_status[\textit{single}] = fuzz.trimf(marital\_status.universe, [0, 0, 1]) \\
+  marital\_status[\textit{married}] = fuzz.trimf(marital\_status.universe, [0, 1, 2]) \\
+  marital\_status[\textit{divorced\_widowed}] = fuzz.trimf(marital\_status.universe, [1, 2, 2]) \\
+  \midrule
+
+  \multicolumn{1}{l}{\textbf{Economic Activity}: 0 = Employed, 1 = Unemployed, 2 = Inactive} \\[0.1em]
+  eco\_act[\textit{employed}] = fuzz.trimf(eco\_act.universe, [0, 0, 1]) \\
+  eco\_act[\textit{unemployed}] = fuzz.trimf(eco\_act.universe, [0, 1, 2]) \\
+  eco\_act[\textit{inactive}] = fuzz.trimf(eco\_act.universe, [1, 2, 2]) \\
+  \midrule
+
+  \multicolumn{1}{l}{\textbf{Ethnic Group}: 0 = Asian, 1 = Black, 2 = Mixed, 3 = White, 4 = Other} \\[0.1em]
+  ethnic[\textit{asian}] = fuzz.trimf(ethnic.universe, [0, 0, 1]) \\
+  ethnic[\textit{black}] = fuzz.trimf(ethnic.universe, [0, 1, 2]) \\
+  ethnic[\textit{mixed}] = fuzz.trimf(ethnic.universe, [1, 2, 3]) \\
+  ethnic[\textit{white}] = fuzz.trimf(ethnic.universe, [2, 3, 4]) \\
+  ethnic[\textit{other}] = fuzz.trimf(ethnic.universe, [3, 4, 4]) \\
+  \midrule
+
+  \multicolumn{1}{l}{\textbf{Number of Cars/Vans}: 0 = None, 1 = One, 2 = Two, 3 = Three or More} \\[0.1em]
+  cars[\textit{none}] = fuzz.trimf(cars.universe, [0, 0, 1]) \\
+  cars[\textit{one}] = fuzz.trimf(cars.universe, [0, 1, 2]) \\
+  cars[\textit{two}] = fuzz.trimf(cars.universe, [1, 2, 3]) \\
+  cars[\textit{three\_or\_more}] = fuzz.trimf(cars.universe, [2, 3, 3]) \\ [0.1em]
+
+  \toprule
+  \multicolumn{1}{c}{\textbf{Output Variable (Consequent)}} \\
+  \midrule
+
+  \multicolumn{1}{l}{\textbf{Response Probability}: 0--100} \\[0.1em]
+  response[\textit{low}] = fuzz.trimf(response.universe, [0, 0, 40]) \\
+  response[\textit{medium}] = fuzz.trimf(response.universe, [30, 50, 70]) \\
+  response[\textit{high}] = fuzz.trimf(response.universe, [60, 100, 100]) \\
+
+\end{longtable}
+  
+% IF-THEN Rule Base for Availability
+\begin{table}[htbp]
+  \centering
+  \caption{IF-THEN Rule Base for Availability}
+  \label{tab:rlue_base_avail_all}
+  \begin{tabularx}{0.9\textwidth}{c X}
+    \toprule
+    \textbf{No.} & \textbf{Rule} \\
+    \midrule
+    1 & IF age[\textit{young\_adult}] OR age[\textit{adult}] THEN response[\textit{high}] \\
+    2 & IF economic\_activity[\textit{employed}] OR economic\_activity[\textit{unemployed}] THEN response[\textit{medium}] \\
+    3 & IF age[\textit{senior}] AND economic\_activity[\textit{inactive}] THEN response[\textit{low}] \\
+    4 & IF age[\textit{young\_adult}] AND economic\_activity[\textit{employed}] THEN response[\textit{high}] \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% IF-THEN Rule Base for Frequency
+\begin{longtable}[c]{c c l}
+  \caption{IF-THEN Rule Base for Frequency 
+  \label{tab:rlue_base_freq_all}}\\
+  \toprule
+  \textbf{No.} & \textbf{Frequency} & \textbf{Rule} \\
+  \midrule
+  \endfirsthead
+ 
+  \multicolumn{3}{l}{\textit{Continuation of Table \ref{tab:rlue_base_freq_all}}}\\
+  \toprule
+  \textbf{No.} & \textbf{Frequency} & \textbf{Rule} \\
+  \midrule
+  \endhead
+ 
+  \midrule
+  \multicolumn{3}{r}{\textit{Continued on next page}} \\
+  \endfoot
+ 
+  \bottomrule
+  \endlastfoot
+ 
+  1 & Several times a day & IF age[\textit{young\_adult}] THEN response[\textit{low}] \\
+  2 & Several times a day & IF age[\textit{adult}] THEN response[\textit{low}] \\
+  3 & Several times a day & IF age[\textit{senior}] THEN response[\textit{low}] \\
+  \midrule
+  4 & Daily & IF age[\textit{young\_adult}] THEN response[\textit{low}] \\
+  5 & Daily & IF age[\textit{adult}] THEN response[\textit{low}] \\
+  6 & Daily & IF age[\textit{senior}] THEN response[\textit{low}] \\
+  \midrule
+  7 & 2--3 times a week & IF age[\textit{young\_adult}] THEN response[\textit{medium}] \\
+  8 & 2--3 times a week & IF age[\textit{adult}] THEN response[\textit{high}] \\
+  9 & 2--3 times a week & IF age[\textit{senior}] THEN response[\textit{medium}] \\
+  \midrule
+  10 & Once a week & IF age[\textit{young\_adult}] THEN response[\textit{medium}] \\
+  11 & Once a week & IF age[\textit{adult}] THEN response[\textit{high}] \\
+  12 & Once a week & IF age[\textit{senior}] THEN response[\textit{medium}] \\
+  \midrule
+  13 & 2--3 times a month & IF age[\textit{young\_adult}] THEN response[\textit{high}] \\
+  14 & 2--3 times a month & IF age[\textit{adult}] THEN response[\textit{high}] \\
+  15 & 2--3 times a month & IF age[\textit{senior}] THEN response[\textit{high}] \\
+  \midrule
+  16 & Once a month & IF age[\textit{young\_adult}] THEN response[\textit{medium}] \\
+  17 & Once a month & IF age[\textit{adult}] THEN response[\textit{medium}] \\
+  18 & Once a month & IF age[\textit{senior}] THEN response[\textit{medium}] \\
+  \midrule
+  19 & Several times a year & IF age[\textit{young\_adult}] THEN response[\textit{low}] \\
+  20 & Several times a year & IF age[\textit{adult}] THEN response[\textit{low}] \\
+  21 & Several times a year & IF age[\textit{senior}] THEN response[\textit{medium}] \\
+  \midrule
+  22 & Less often & IF age[\textit{young\_adult}] THEN response[\textit{low}] \\
+  23 & Less often & IF age[\textit{adult}] THEN response[\textit{low}] \\
+  24 & Less often & IF age[\textit{senior}] THEN response[\textit{low}] \\
+
+\end{longtable}
+
+% IF-THEN Rule Base for Order Category
+\begin{longtable}[c]{c l}
+  \caption{IF-THEN Rule Base for Order Category 
+  \label{tab:rlue_base_cate_all}}\\
+  \toprule
+  \textbf{No.} & \textbf{Rules} \\
+  \midrule
+  \endfirsthead
+ 
+  \multicolumn{2}{l}{\textit{Continuation of Table \ref{tab:rlue_base_cate_all}}}\\
+  \toprule
+  \textbf{No.} & \textbf{Rules} \\
+  \midrule
+  \endhead
+  
+  \midrule
+  \multicolumn{2}{r}{\textit{Continued on next page}} \\
+  \endfoot
+ 
+  \bottomrule
+  \endlastfoot
+
+  % ---------- Lightweight Fashion & Personal Care ----------
+  \multicolumn{2}{l}{\textbf{Category: Lightweight Fashion \& Personal Care}} \\[0.5em]
+
+  1 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{high}] \\
+  2 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{high}] \\
+  3 & IF age[\textit{senior}] AND sex[\textit{female}] THEN response[\textit{medium}] \\
+  4 & IF age[\textit{young\_adult}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  5 & IF age[\textit{adult}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  6 & IF age[\textit{senior}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  7 & IF sex[\textit{female}] AND age[\textit{young\_adult}] THEN response[\textit{high}] \\
+  \midrule
+
+  % ---------- Small High-Value Electronics ----------
+  \multicolumn{2}{l}{\textbf{Category: Small High-Value Electronics}} \\[0.5em]
+
+  8 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  9 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{medium}] \\
+  10 & IF age[\textit{senior}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  11 & IF age[\textit{young\_adult}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  12 & IF age[\textit{adult}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  13 & IF age[\textit{senior}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  14 & IF sex[\textit{male}] AND number\_of\_cars[\textit{one}] THEN response[\textit{medium}] \\
+  15 & IF sex[\textit{male}] AND age[\textit{adult}] AND marital\_status[\textit{single}] THEN response[\textit{high}] \\
+  \midrule
+
+  % ---------- Medium-Sized Consumer Goods ----------
+  \multicolumn{2}{l}{\textbf{Category: Medium-Sized Consumer Goods}} \\[0.5em]
+  16 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{medium}] \\
+  17 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{high}] \\
+  18 & IF age[\textit{senior}] AND sex[\textit{female}] THEN response[\textit{medium}] \\
+  19 & IF age[\textit{young\_adult}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  20 & IF age[\textit{adult}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  21 & IF age[\textit{senior}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  22 & IF age[\textit{young\_adult}] THEN response[\textit{low}]@0.90\% \\
+  23 & IF age[\textit{adult}] THEN response[\textit{low}]@0.80\% \\
+  24 & IF age[\textit{senior}] THEN response[\textit{low}] \\
+  25 & IF sex[\textit{female}] AND age[\textit{young\_adult}] AND marital\_status[\textit{single}] THEN response[\textit{high}] \\
+  26 & IF sex[\textit{female}] AND marital\_status[\textit{married}] THEN response[\textit{high}] \\
+  \midrule
+
+  % ---------- Cultural & Entertainment Products ----------
+  \multicolumn{2}{l}{\textbf{Category: Cultural \& Entertainment Products}} \\[0.5em]
+  27 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  28 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{medium}] \\
+  29 & IF age[\textit{senior}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  30 & IF age[\textit{young\_adult}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  31 & IF age[\textit{adult}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  32 & IF age[\textit{senior}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  33 & IF sex[\textit{male}] AND number\_of\_cars[\textit{two}] THEN response[\textit{medium}] \\
+  \midrule
+
+  % ---------- Medium-Sized Durable Home Goods ----------
+  \multicolumn{2}{l}{\textbf{Category: Medium-Sized Durable Home Goods}} \\[0.5em]
+  34 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  35 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  36 & IF age[\textit{senior}] AND sex[\textit{female}] THEN response[\textit{medium}] \\
+  37 & IF age[\textit{young\_adult}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  38 & IF age[\textit{adult}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  39 & IF age[\textit{senior}] AND sex[\textit{male}] THEN response[\textit{medium}] \\
+  \midrule
+
+  % ---------- Large Heavy Items ----------
+  \multicolumn{2}{l}{\textbf{Category: Large Heavy Items}} \\[0.5em]
+  40 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  41 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  42 & IF age[\textit{senior}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  43 & IF age[\textit{young\_adult}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  44 & IF age[\textit{adult}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  45 & IF age[\textit{senior}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  \midrule
+
+  % ---------- Travel & Luggage Products ----------
+  \multicolumn{2}{l}{\textbf{Travel \& Luggage Products}} \\[0.5em]
+  46 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  47 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  48 & IF age[\textit{senior}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+  49 & IF age[\textit{young\_adult}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  50 & IF age[\textit{adult}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+  51 & IF age[\textit{senior}] AND sex[\textit{male}] THEN response[\textit{low}] \\
+
+\end{longtable}
+
+\newpage
+
+\section{Jenson-Shannon Divergence of Synthetic Population}
+\label{apdx:fis_jsd_pop}
+
+% Jenson-Shannon Divergence of Different Demographic Features
+\begin{table}[htbp]
+  \centering
+  \caption{Jenson-Shannon Divergence of Different Demographic Features}
+  \begin{tabular}{c c c c c c c}
+  \toprule
+  \makecell{\textbf{Synthetic} \\ \textbf{Size}} & 
+  \textbf{Age} & \textbf{Sex} & 
+  \makecell{\textbf{Ethnic} \\ \textbf{Group}} & 
+  \makecell{\textbf{Economic} \\ \textbf{ Activity}} & 
+  \makecell{\textbf{Number Of} \\ \textbf{Cars}} & 
+  \makecell{\textbf{Marital} \\ \textbf{Status}} \\
+  \midrule
+  $1\times 10^{3}$   & 0.5189 & 0.1795 & 0.4584 & 0.2137 & 0.3744 & 0.3928 \\
+  $1\times 10^{4}$   & 0.4639 & 0.0498 & 0.4592 & 0.2137 & 0.3376 & 0.3704 \\
+  $2\times 10^{4}$   & 0.3824 & 0.0145 & 0.4150 & 0.2133 & 0.2691 & 0.2870 \\
+  $3\times 10^{4}$   & 0.3063 & 0.0125 & 0.3807 & 0.2127 & 0.2053 & 0.2275 \\
+  $4\times 10^{4}$   & 0.2661 & 0.0154 & 0.3584 & 0.2096 & 0.1875 & 0.2017 \\
+  $5\times 10^{4}$   & 0.2337 & 0.0178 & 0.3417 & 0.2066 & 0.1757 & 0.1810 \\
+  $6\times 10^{4}$   & 0.2046 & 0.0130 & 0.3303 & 0.2032 & 0.1644 & 0.1625 \\
+  $7\times 10^{4}$   & 0.1801 & 0.0145 & 0.3171 & 0.2011 & 0.1576 & 0.1490 \\
+  $8\times 10^{4}$   & 0.1622 & 0.0163 & 0.3059 & 0.1981 & 0.1472 & 0.1344 \\
+  $9\times 10^{4}$   & 0.1484 & 0.0150 & 0.2955 & 0.1965 & 0.1417 & 0.1232 \\
+  $1\times 10^{5}$   & 0.1378 & 0.0165 & 0.2864 & 0.1938 & 0.1375 & 0.1127 \\
+  $2\times 10^{5}$   & 0.0849 & 0.0130 & 0.2138 & 0.1710 & 0.1098 & 0.0614 \\
+  $3\times 10^{5}$   & 0.0568 & 0.0069 & 0.1674 & 0.1487 & 0.0978 & 0.0457 \\
+  $4\times 10^{5}$   & 0.0383 & 0.0047 & 0.1370 & 0.1353 & 0.0894 & 0.0376 \\
+  $5\times 10^{5}$   & 0.0291 & 0.0026 & 0.1162 & 0.1256 & 0.0812 & 0.0335 \\
+  $6\times 10^{5}$   & 0.0227 & 0.0024 & 0.1010 & 0.1184 & 0.0754 & 0.0303 \\
+  $7\times 10^{5}$   & 0.0177 & 0.0020 & 0.0880 & 0.1131 & 0.0702 & 0.0285 \\
+  $8\times 10^{5}$   & 0.0143 & 0.0020 & 0.0770 & 0.1082 & 0.0666 & 0.0265 \\
+  $9\times 10^{5}$   & 0.0126 & 0.0019 & 0.0684 & 0.1036 & 0.0628 & 0.0251 \\
+  $1\times 10^{6}$   & 0.0112 & 0.0016 & 0.0610 & 0.0995 & 0.0594 & 0.0238 \\
+  $1.5\times 10^{6}$ & 0.0080 & 0.0011 & 0.0364 & 0.0835 & 0.0481 & 0.0178 \\
+  $2\times 10^{6}$   & 0.0060 & 0.0009 & 0.0248 & 0.0728 & 0.0409 & 0.0135 \\
+  \bottomrule
+  \end{tabular}
+
+\end{table}
+
+\newpage
+
+\section{Jenson-Shannon Divergence of Synthetic Order}
+\label{apdx:fis_jsd_ord}
+
+% Jenson-Shannon Divergence of Synthetic Order Category
+\begin{longtable}{c|cc|cc|cc}
+  \caption{Jenson-Shannon Divergence of Synthetic Order Category
+  \label{tab:jsd_ord}} \\
+  \toprule
+  \makecell{\textbf{Synthetic} \\ \textbf{Size}} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} \\
+  \midrule
+  \endfirsthead
+  
+  \multicolumn{2}{l}{\textit{Continuation of Table \ref{tab:jsd_ord}}}\\
+  \toprule
+  \makecell{\textbf{Synthetic} \\ \textbf{Size}} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} \\
+  \midrule
+  \endhead
+  
+  \midrule
+  \multicolumn{7}{r}{\textit{Continued on next page}} \\
+  \endfoot
+  
+  \bottomrule
+  \endlastfoot
+  
+  % ------------------ seeds 0-2 ------------------
+  $8\times 10^{0}$ & 0 & 0.24918 & 1 & 0.42281 & 2 & 0.58640 \\
+  $2\times 10^{1}$ & 0 & 0.15089 & 1 & 0.22137 & 2 & 0.21859 \\
+  $4\times 10^{1}$ & 0 & 0.23050 & 1 & 0.16502 & 2 & 0.22041 \\
+  $6\times 10^{1}$ & 0 & 0.17392 & 1 & 0.13615 & 2 & 0.20384 \\
+  $8\times 10^{1}$ & 0 & 0.15562 & 1 & 0.13837 & 2 & 0.18589 \\
+  $2\times 10^{2}$ & 0 & 0.13849 & 1 & 0.16534 & 2 & 0.13241 \\
+  $4\times 10^{2}$ & 0 & 0.11940 & 1 & 0.14367 & 2 & 0.12879 \\
+  $6\times 10^{2}$ & 0 & 0.13583 & 1 & 0.14005 & 2 & 0.12175 \\
+  $8\times 10^{2}$ & 0 & 0.14398 & 1 & 0.15557 & 2 & 0.11833 \\
+  $1\times 10^{3}$ & 0 & 0.14054 & 1 & 0.14269 & 2 & 0.10557 \\
+  $2\times 10^{3}$ & 0 & 0.11406 & 1 & 0.12544 & 2 & 0.11891 \\
+  $4\times 10^{3}$ & 0 & 0.13685 & 1 & 0.12224 & 2 & 0.12051 \\
+  $1\times 10^{4}$ & 0 & 0.12577 & 1 & 0.12546 & 2 & 0.11566 \\
+  $2\times 10^{4}$ & 0 & 0.12255 & 1 & 0.12281 & 2 & 0.12063 \\
+  $4\times 10^{4}$ & 0 & 0.12732 & 1 & 0.12142 & 2 & 0.12137 \\
+  $1\times 10^{5}$ & 0 & 0.12313 & 1 & 0.12599 & 2 & 0.12247 \\
+  $2\times 10^{5}$ & 0 & 0.12361 & 1 & 0.12418 & 2 & 0.12131 \\
+  $4\times 10^{5}$ & 0 & 0.12255 & 1 & 0.12259 & 2 & 0.12255 \\
+  $1\times 10^{6}$ & 0 & 0.12243 & 1 & 0.12227 & 2 & 0.12331 \\
+  $2\times 10^{6}$ & 0 & 0.12243 & 1 & 0.12300 & 2 & 0.12235 \\
+  \midrule
+  % ------------------ seeds 3-5 ------------------
+  $8\times 10^{0}$ & 3 & 0.42397 & 4 & 0.21724 & 5 & 0.49192 \\
+  $2\times 10^{1}$ & 3 & 0.44149 & 4 & 0.15675 & 5 & 0.33263 \\
+  $4\times 10^{1}$ & 3 & 0.31159 & 4 & 0.16050 & 5 & 0.11878 \\
+  $6\times 10^{1}$ & 3 & 0.21016 & 4 & 0.18725 & 5 & 0.14344 \\
+  $8\times 10^{1}$ & 3 & 0.13186 & 4 & 0.17778 & 5 & 0.16641 \\
+  $2\times 10^{2}$ & 3 & 0.15526 & 4 & 0.12401 & 5 & 0.14981 \\
+  $4\times 10^{2}$ & 3 & 0.14376 & 4 & 0.07787 & 5 & 0.12814 \\
+  $6\times 10^{2}$ & 3 & 0.14124 & 4 & 0.11845 & 5 & 0.12600 \\
+  $8\times 10^{2}$ & 3 & 0.12618 & 4 & 0.10617 & 5 & 0.13363 \\
+  $1\times 10^{3}$ & 3 & 0.13249 & 4 & 0.12887 & 5 & 0.12954 \\
+  $2\times 10^{3}$ & 3 & 0.11536 & 4 & 0.10648 & 5 & 0.12527 \\
+  $4\times 10^{3}$ & 3 & 0.12031 & 4 & 0.11856 & 5 & 0.11877 \\
+  $1\times 10^{4}$ & 3 & 0.11860 & 4 & 0.12978 & 5 & 0.11580 \\
+  $2\times 10^{4}$ & 3 & 0.12336 & 4 & 0.11983 & 5 & 0.12172 \\
+  $4\times 10^{4}$ & 3 & 0.12374 & 4 & 0.12324 & 5 & 0.12239 \\
+  $1\times 10^{5}$ & 3 & 0.12227 & 4 & 0.12541 & 5 & 0.12173 \\
+  $2\times 10^{5}$ & 3 & 0.12236 & 4 & 0.12215 & 5 & 0.12274 \\
+  $4\times 10^{5}$ & 3 & 0.12368 & 4 & 0.12209 & 5 & 0.12208 \\
+  $1\times 10^{6}$ & 3 & 0.12311 & 4 & 0.12254 & 5 & 0.12254 \\
+  $2\times 10^{6}$ & 3 & 0.12267 & 4 & 0.12273 & 5 & 0.12274 \\
+  \midrule
+  % ------------------ seeds 6-8 ------------------
+  $8\times 10^{0}$ & 6 & 0.43611 & 7 & 0.33656 & 8 & 0.79570 \\
+  $2\times 10^{1}$ & 6 & 0.26708 & 7 & 0.40637 & 8 & 0.67407 \\
+  $4\times 10^{1}$ & 6 & 0.19024 & 7 & 0.14659 & 8 & 0.27698 \\
+  $6\times 10^{1}$ & 6 & 0.17708 & 7 & 0.15378 & 8 & 0.24529 \\
+  $8\times 10^{1}$ & 6 & 0.14116 & 7 & 0.12654 & 8 & 0.25810 \\
+  $2\times 10^{2}$ & 6 & 0.12971 & 7 & 0.13340 & 8 & 0.15223 \\
+  $4\times 10^{2}$ & 6 & 0.11623 & 7 & 0.12199 & 8 & 0.17663 \\
+  $6\times 10^{2}$ & 6 & 0.12304 & 7 & 0.13821 & 8 & 0.16828 \\
+  $8\times 10^{2}$ & 6 & 0.12227 & 7 & 0.10849 & 8 & 0.17321 \\
+  $1\times 10^{3}$ & 6 & 0.12358 & 7 & 0.11912 & 8 & 0.16744 \\
+  $2\times 10^{3}$ & 6 & 0.13824 & 7 & 0.13303 & 8 & 0.14679 \\
+  $4\times 10^{3}$ & 6 & 0.12602 & 7 & 0.13406 & 8 & 0.14097 \\
+  $1\times 10^{4}$ & 6 & 0.12513 & 7 & 0.12851 & 8 & 0.13027 \\
+  $2\times 10^{4}$ & 6 & 0.12686 & 7 & 0.11339 & 8 & 0.12351 \\
+  $4\times 10^{4}$ & 6 & 0.12390 & 7 & 0.12141 & 8 & 0.11906 \\
+  $1\times 10^{5}$ & 6 & 0.12255 & 7 & 0.12118 & 8 & 0.12073 \\
+  $2\times 10^{5}$ & 6 & 0.12228 & 7 & 0.12335 & 8 & 0.12429 \\
+  $4\times 10^{5}$ & 6 & 0.12148 & 7 & 0.12133 & 8 & 0.12285 \\
+  $1\times 10^{6}$ & 6 & 0.12279 & 7 & 0.12218 & 8 & 0.12316 \\
+  $2\times 10^{6}$ & 6 & 0.12274 & 7 & 0.12246 & 8 & 0.12279 \\
+  \midrule
+  % ------------------ seeds 9-11 ------------------
+  $8\times 10^{0}$ & 9 & 0.53410 & 10 & 0.26145 & 11 & 0.46355 \\
+  $2\times 10^{1}$ & 9 & 0.20940 & 10 & 0.29451 & 11 & 0.28280 \\
+  $4\times 10^{1}$ & 9 & 0.27858 & 10 & 0.10875 & 11 & 0.13245 \\
+  $6\times 10^{1}$ & 9 & 0.14451 & 10 & 0.12856 & 11 & 0.12485 \\
+  $8\times 10^{1}$ & 9 & 0.10874 & 10 & 0.17401 & 11 & 0.15005 \\
+  $2\times 10^{2}$ & 9 & 0.09553 & 10 & 0.17743 & 11 & 0.12513 \\
+  $4\times 10^{2}$ & 9 & 0.10850 & 10 & 0.15277 & 11 & 0.12893 \\
+  $6\times 10^{2}$ & 9 & 0.13716 & 10 & 0.12566 & 11 & 0.12388 \\
+  $8\times 10^{2}$ & 9 & 0.12012 & 10 & 0.12373 & 11 & 0.14341 \\
+  $1\times 10^{3}$ & 9 & 0.14263 & 10 & 0.13120 & 11 & 0.11596 \\
+  $2\times 10^{3}$ & 9 & 0.13697 & 10 & 0.13294 & 11 & 0.12456 \\
+  $4\times 10^{3}$ & 9 & 0.13515 & 10 & 0.13527 & 11 & 0.13240 \\
+  $1\times 10^{4}$ & 9 & 0.12353 & 10 & 0.12361 & 11 & 0.12963 \\
+  $2\times 10^{4}$ & 9 & 0.12592 & 10 & 0.11983 & 11 & 0.12386 \\
+  $4\times 10^{4}$ & 9 & 0.12421 & 10 & 0.12371 & 11 & 0.12105 \\
+  $1\times 10^{5}$ & 9 & 0.12258 & 10 & 0.12479 & 11 & 0.12284 \\
+  $2\times 10^{5}$ & 9 & 0.12368 & 10 & 0.12274 & 11 & 0.12169 \\
+  $4\times 10^{5}$ & 9 & 0.12350 & 10 & 0.12269 & 11 & 0.12207 \\
+  $1\times 10^{6}$ & 9 & 0.12347 & 10 & 0.12274 & 11 & 0.12246 \\
+  $2\times 10^{6}$ & 9 & 0.12268 & 10 & 0.12295 & 11 & 0.12222 \\
+  \midrule
+  % ------------------ seeds 12-14 ------------------
+  $8\times 10^{0}$ & 12 & 0.30569 & 13 & 0.36736 & 14 & 0.37298 \\
+  $2\times 10^{1}$ & 12 & 0.21199 & 13 & 0.20609 & 14 & 0.35081 \\
+  $4\times 10^{1}$ & 12 & 0.18156 & 13 & 0.29459 & 14 & 0.10734 \\
+  $6\times 10^{1}$ & 12 & 0.20508 & 13 & 0.16839 & 14 & 0.14943 \\
+  $8\times 10^{1}$ & 12 & 0.18219 & 13 & 0.13458 & 14 & 0.14759 \\
+  $2\times 10^{2}$ & 12 & 0.15438 & 13 & 0.10611 & 14 & 0.08352 \\
+  $4\times 10^{2}$ & 12 & 0.09963 & 13 & 0.14214 & 14 & 0.12146 \\
+  $6\times 10^{2}$ & 12 & 0.11619 & 13 & 0.15102 & 14 & 0.13629 \\
+  $8\times 10^{2}$ & 12 & 0.09667 & 13 & 0.13894 & 14 & 0.13031 \\
+  $1\times 10^{3}$ & 12 & 0.11747 & 13 & 0.12675 & 14 & 0.13001 \\
+  $2\times 10^{3}$ & 12 & 0.11141 & 13 & 0.13268 & 14 & 0.12508 \\
+  $4\times 10^{3}$ & 12 & 0.11303 & 13 & 0.12622 & 14 & 0.11784 \\
+  $1\times 10^{4}$ & 12 & 0.12658 & 13 & 0.12181 & 14 & 0.12038 \\
+  $2\times 10^{4}$ & 12 & 0.12558 & 13 & 0.12647 & 14 & 0.12081 \\
+  $4\times 10^{4}$ & 12 & 0.12241 & 13 & 0.12336 & 14 & 0.12504 \\
+  $1\times 10^{5}$ & 12 & 0.12671 & 13 & 0.12441 & 14 & 0.12360 \\
+  $2\times 10^{5}$ & 12 & 0.12379 & 13 & 0.12277 & 14 & 0.12310 \\
+  $4\times 10^{5}$ & 12 & 0.12323 & 13 & 0.12377 & 14 & 0.12235 \\
+  $1\times 10^{6}$ & 12 & 0.12281 & 13 & 0.12253 & 14 & 0.12247 \\
+  $2\times 10^{6}$ & 12 & 0.12227 & 13 & 0.12286 & 14 & 0.12243 \\
+  \midrule
+  % ------------------ seeds 15-17 ------------------
+  $8\times 10^{0}$ & 15 & 0.55284 & 16 & 0.37367 & 17 & 0.38080 \\
+  $2\times 10^{1}$ & 15 & 0.16038 & 16 & 0.17864 & 17 & 0.38080 \\
+  $4\times 10^{1}$ & 15 & 0.10999 & 16 & 0.18559 & 17 & 0.25713 \\
+  $6\times 10^{1}$ & 15 & 0.13588 & 16 & 0.27891 & 17 & 0.21115 \\
+  $8\times 10^{1}$ & 15 & 0.15190 & 16 & 0.18065 & 17 & 0.21660 \\
+  $2\times 10^{2}$ & 15 & 0.15043 & 16 & 0.15374 & 17 & 0.20439 \\
+  $4\times 10^{2}$ & 15 & 0.12226 & 16 & 0.11730 & 17 & 0.14701 \\
+  $6\times 10^{2}$ & 15 & 0.13146 & 16 & 0.12070 & 17 & 0.12837 \\
+  $8\times 10^{2}$ & 15 & 0.10586 & 16 & 0.13468 & 17 & 0.13897 \\
+  $1\times 10^{3}$ & 15 & 0.11478 & 16 & 0.10399 & 17 & 0.13701 \\
+  $2\times 10^{3}$ & 15 & 0.10695 & 16 & 0.13267 & 17 & 0.12274 \\
+  $4\times 10^{3}$ & 15 & 0.11535 & 16 & 0.11792 & 17 & 0.13399 \\
+  $1\times 10^{4}$ & 15 & 0.12072 & 16 & 0.12635 & 17 & 0.12869 \\
+  $2\times 10^{4}$ & 15 & 0.11567 & 16 & 0.12058 & 17 & 0.12663 \\
+  $4\times 10^{4}$ & 15 & 0.12138 & 16 & 0.12096 & 17 & 0.12788 \\
+  $1\times 10^{5}$ & 15 & 0.11998 & 16 & 0.12233 & 17 & 0.12417 \\
+  $2\times 10^{5}$ & 15 & 0.12193 & 16 & 0.12156 & 17 & 0.12527 \\
+  $4\times 10^{5}$ & 15 & 0.12284 & 16 & 0.12209 & 17 & 0.12381 \\
+  $1\times 10^{6}$ & 15 & 0.12322 & 16 & 0.12238 & 17 & 0.12296 \\
+  $2\times 10^{6}$ & 15 & 0.12332 & 16 & 0.12287 & 17 & 0.12277 \\
+  \midrule
+  % ------------------ seeds 18-19-42 ------------------
+  $8\times 10^{0}$ & 18 & 0.33216 & 19 & 0.46450 & 42 & 0.65800 \\
+  $2\times 10^{1}$ & 18 & 0.19041 & 19 & 0.26074 & 42 & 0.25448 \\
+  $4\times 10^{1}$ & 18 & 0.12975 & 19 & 0.19427 & 42 & 0.16591 \\
+  $6\times 10^{1}$ & 18 & 0.15550 & 19 & 0.15030 & 42 & 0.13699 \\
+  $8\times 10^{1}$ & 18 & 0.15613 & 19 & 0.13770 & 42 & 0.16232 \\
+  $2\times 10^{2}$ & 18 & 0.11529 & 19 & 0.09880 & 42 & 0.14191 \\
+  $4\times 10^{2}$ & 18 & 0.15544 & 19 & 0.14479 & 42 & 0.13815 \\
+  $6\times 10^{2}$ & 18 & 0.11405 & 19 & 0.12898 & 42 & 0.11702 \\
+  $8\times 10^{2}$ & 18 & 0.09973 & 19 & 0.13015 & 42 & 0.11814 \\
+  $1\times 10^{3}$ & 18 & 0.11706 & 19 & 0.13096 & 42 & 0.12300 \\
+  $2\times 10^{3}$ & 18 & 0.10699 & 19 & 0.12944 & 42 & 0.12545 \\
+  $4\times 10^{3}$ & 18 & 0.10638 & 19 & 0.12028 & 42 & 0.11970 \\
+  $1\times 10^{4}$ & 18 & 0.12226 & 19 & 0.11804 & 42 & 0.11749 \\
+  $2\times 10^{4}$ & 18 & 0.12374 & 19 & 0.12413 & 42 & 0.12176 \\
+  $4\times 10^{4}$ & 18 & 0.12218 & 19 & 0.12662 & 42 & 0.12288 \\
+  $1\times 10^{5}$ & 18 & 0.12340 & 19 & 0.12330 & 42 & 0.12307 \\
+  $2\times 10^{5}$ & 18 & 0.12244 & 19 & 0.12389 & 42 & 0.12227 \\
+  $4\times 10^{5}$ & 18 & 0.12240 & 19 & 0.12153 & 42 & 0.12247 \\
+  $1\times 10^{6}$ & 18 & 0.12290 & 19 & 0.12250 & 42 & 0.12266 \\
+  $2\times 10^{6}$ & 18 & 0.12274 & 19 & 0.12271 & 42 & 0.12311 \\
+  
+  \end{longtable}
+
+% Jenson-Shannon Divergence of Synthetic Order Customer
+\begin{longtable}{c|cc|cc|cc}
+  \caption{Jenson-Shannon Divergence of Synthetic Customer Age
+  \label{tab:jsd_custage}} \\
+  \toprule
+  \makecell{\textbf{Synthetic} \\ \textbf{Size}} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} \\
+  \midrule
+  \endfirsthead
+  
+  \multicolumn{2}{l}{\textit{Continuation of Table \ref{tab:jsd_custage}}}\\
+  \toprule
+  \makecell{\textbf{Synthetic} \\ \textbf{Size}} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} & 
+  \makecell{\textbf{Random} \\ \textbf{Seed}} & \textbf{JSD} \\
+  \midrule
+  \endhead
+  
+  \midrule
+  \multicolumn{7}{r}{\textit{Continued on next page}} \\
+  \endfoot
+  
+  \bottomrule
+  \endlastfoot
+
+  % ------------------ seeds 0-2 ------------------
+  $8\times 10^{0}$ & 0 & 0.17917 & 1 & 0.19501 & 2 & 0.60065 \\
+  $2\times 10^{1}$ & 0 & 0.19732 & 1 & 0.22068 & 2 & 0.09267 \\
+  $4\times 10^{1}$ & 0 & 0.07825 & 1 & 0.18976 & 2 & 0.35667 \\
+  $6\times 10^{1}$ & 0 & 0.14175 & 1 & 0.01430 & 2 & 0.26170 \\
+  $8\times 10^{1}$ & 0 & 0.05713 & 1 & 0.12693 & 2 & 0.28907 \\
+  $2\times 10^{2}$ & 0 & 0.10644 & 1 & 0.03968 & 2 & 0.07347 \\
+  $4\times 10^{2}$ & 0 & 0.02621 & 1 & 0.07236 & 2 & 0.08176 \\
+  $6\times 10^{2}$ & 0 & 0.07989 & 1 & 0.07400 & 2 & 0.09182 \\
+  $8\times 10^{2}$ & 0 & 0.05706 & 1 & 0.06549 & 2 & 0.08899 \\
+  $1\times 10^{3}$ & 0 & 0.03947 & 1 & 0.04664 & 2 & 0.07465 \\
+  $2\times 10^{3}$ & 0 & 0.05864 & 1 & 0.04580 & 2 & 0.05940 \\
+  $4\times 10^{3}$ & 0 & 0.07024 & 1 & 0.04975 & 2 & 0.06620 \\
+  $1\times 10^{4}$ & 0 & 0.06079 & 1 & 0.05344 & 2 & 0.04552 \\
+  $2\times 10^{4}$ & 0 & 0.05866 & 1 & 0.05408 & 2 & 0.06155 \\
+  $4\times 10^{4}$ & 0 & 0.05394 & 1 & 0.05524 & 2 & 0.05317 \\
+  $1\times 10^{5}$ & 0 & 0.05507 & 1 & 0.05337 & 2 & 0.05625 \\
+  $2\times 10^{5}$ & 0 & 0.05645 & 1 & 0.05335 & 2 & 0.05269 \\
+  $4\times 10^{5}$ & 0 & 0.05607 & 1 & 0.05569 & 2 & 0.05386 \\
+  $1\times 10^{6}$ & 0 & 0.05499 & 1 & 0.05478 & 2 & 0.05424 \\
+  $2\times 10^{6}$ & 0 & 0.05488 & 1 & 0.05470 & 2 & 0.05470 \\
+  \midrule
+  % ------------------ seeds 3-5 ------------------
+  $8\times 10^{0}$ & 3 & 0.40567 & 4 & 0.12094 & 5 & 0.44030 \\
+  $2\times 10^{1}$ & 3 & 0.08299 & 4 & 0.18160 & 5 & 0.40695 \\
+  $4\times 10^{1}$ & 3 & 0.06983 & 4 & 0.16823 & 5 & 0.12021 \\
+  $6\times 10^{1}$ & 3 & 0.02363 & 4 & 0.02418 & 5 & 0.01696 \\ 
+  $8\times 10^{1}$ & 3 & 0.06556 & 4 & 0.06589 & 5 & 0.05713 \\
+  $2\times 10^{2}$ & 3 & 0.08742 & 4 & 0.11426 & 5 & 0.10887 \\
+  $4\times 10^{2}$ & 3 & 0.11296 & 4 & 0.05012 & 5 & 0.07069 \\
+  $6\times 10^{2}$ & 3 & 0.10595 & 4 & 0.06755 & 5 & 0.08111 \\
+  $8\times 10^{2}$ & 3 & 0.09602 & 4 & 0.05161 & 5 & 0.08696 \\
+  $1\times 10^{3}$ & 3 & 0.08395 & 4 & 0.02630 & 5 & 0.04082 \\
+  $2\times 10^{3}$ & 3 & 0.07269 & 4 & 0.04156 & 5 & 0.08306 \\
+  $4\times 10^{3}$ & 3 & 0.05520 & 4 & 0.06830 & 5 & 0.05735 \\
+  $1\times 10^{4}$ & 3 & 0.05901 & 4 & 0.06310 & 5 & 0.06955 \\
+  $2\times 10^{4}$ & 3 & 0.05882 & 4 & 0.05907 & 5 & 0.05708 \\
+  $4\times 10^{4}$ & 3 & 0.05357 & 4 & 0.05530 & 5 & 0.05903 \\
+  $1\times 10^{5}$ & 3 & 0.05143 & 4 & 0.05637 & 5 & 0.05452 \\
+  $2\times 10^{5}$ & 3 & 0.05323 & 4 & 0.05337 & 5 & 0.05504 \\
+  $4\times 10^{5}$ & 3 & 0.05342 & 4 & 0.05440 & 5 & 0.05530 \\
+  $1\times 10^{6}$ & 3 & 0.05516 & 4 & 0.05528 & 5 & 0.05448 \\
+  $2\times 10^{6}$ & 3 & 0.05481 & 4 & 0.05488 & 5 & 0.05467 \\
+  \midrule
+  % ------------------ seeds 6-8 ------------------
+  $8\times 10^{0}$ & 6 & 0.11609 & 7 & 0.20070 & 8 & 0.70826 \\
+  $2\times 10^{1}$ & 6 & 0.22458 & 7 & 0.10844 & 8 & 0.70826 \\
+  $4\times 10^{1}$ & 6 & 0.05626 & 7 & 0.16370 & 8 & 0.04531 \\
+  $6\times 10^{1}$ & 6 & 0.14517 & 7 & 0.09979 & 8 & 0.14147 \\
+  $8\times 10^{1}$ & 6 & 0.04537 & 7 & 0.14606 & 8 & 0.22242 \\
+  $2\times 10^{2}$ & 6 & 0.08071 & 7 & 0.08558 & 8 & 0.12932 \\
+  $4\times 10^{2}$ & 6 & 0.04554 & 7 & 0.02259 & 8 & 0.05876 \\
+  $6\times 10^{2}$ & 6 & 0.03683 & 7 & 0.03988 & 8 & 0.00833 \\
+  $8\times 10^{2}$ & 6 & 0.02150 & 7 & 0.06008 & 8 & 0.05496 \\
+  $1\times 10^{3}$ & 6 & 0.04170 & 7 & 0.05332 & 8 & 0.07724 \\
+  $2\times 10^{3}$ & 6 & 0.02593 & 7 & 0.05603 & 8 & 0.03833 \\
+  $4\times 10^{3}$ & 6 & 0.03834 & 7 & 0.05206 & 8 & 0.05024 \\
+  $1\times 10^{4}$ & 6 & 0.04291 & 7 & 0.04670 & 8 & 0.06056 \\
+  $2\times 10^{4}$ & 6 & 0.04732 & 7 & 0.05296 & 8 & 0.05313 \\
+  $4\times 10^{4}$ & 6 & 0.05240 & 7 & 0.04999 & 8 & 0.05898 \\
+  $1\times 10^{5}$ & 6 & 0.05457 & 7 & 0.05522 & 8 & 0.05535 \\
+  $2\times 10^{5}$ & 6 & 0.05226 & 7 & 0.05312 & 8 & 0.05386 \\
+  $4\times 10^{5}$ & 6 & 0.05499 & 7 & 0.05421 & 8 & 0.05576 \\
+  $1\times 10^{6}$ & 6 & 0.05503 & 7 & 0.05536 & 8 & 0.05591 \\
+  $2\times 10^{6}$ & 6 & 0.05557 & 7 & 0.05548 & 8 & 0.05515 \\
+  \midrule
+  % ------------------ seeds 9-11 ------------------
+  $8\times 10^{0}$ & 9 & 0.46352 & 10 & 0.42800 & 11 & 0.60065 \\
+  $2\times 10^{1}$ & 9 & 0.22667 & 10 & 0.41167 & 11 & 0.39442 \\
+  $4\times 10^{1}$ & 9 & 0.03982 & 10 & 0.12048 & 11 & 0.30682 \\
+  $6\times 10^{1}$ & 9 & 0.07580 & 10 & 0.12183 & 11 & 0.17641 \\
+  $8\times 10^{1}$ & 9 & 0.10782 & 10 & 0.05500 & 11 & 0.17984 \\
+  $2\times 10^{2}$ & 9 & 0.02299 & 10 & 0.05242 & 11 & 0.12223 \\
+  $4\times 10^{2}$ & 9 & 0.05659 & 10 & 0.14121 & 11 & 0.09094 \\
+  $6\times 10^{2}$ & 9 & 0.03695 & 10 & 0.08188 & 11 & 0.06926 \\
+  $8\times 10^{2}$ & 9 & 0.09317 & 10 & 0.07531 & 11 & 0.06802 \\
+  $1\times 10^{3}$ & 9 & 0.05666 & 10 & 0.06323 & 11 & 0.08827 \\
+  $2\times 10^{3}$ & 9 & 0.05210 & 10 & 0.06180 & 11 & 0.06946 \\
+  $4\times 10^{3}$ & 9 & 0.05420 & 10 & 0.05658 & 11 & 0.07333 \\
+  $1\times 10^{4}$ & 9 & 0.05484 & 10 & 0.05476 & 11 & 0.07042 \\
+  $2\times 10^{4}$ & 9 & 0.05505 & 10 & 0.05676 & 11 & 0.05864 \\
+  $4\times 10^{4}$ & 9 & 0.05209 & 10 & 0.05633 & 11 & 0.05689 \\
+  $1\times 10^{5}$ & 9 & 0.05381 & 10 & 0.05825 & 11 & 0.05932 \\
+  $2\times 10^{5}$ & 9 & 0.05419 & 10 & 0.05837 & 11 & 0.05442 \\
+  $4\times 10^{5}$ & 9 & 0.05517 & 10 & 0.05529 & 11 & 0.05486 \\
+  $1\times 10^{6}$ & 9 & 0.05433 & 10 & 0.05440 & 11 & 0.05459 \\
+  $2\times 10^{6}$ & 9 & 0.05478 & 10 & 0.05508 & 11 & 0.05498 \\
+  \midrule
+  % ------------------ seeds 12-14 ------------------
+  $8\times 10^{0}$ & 12 & 0.23850 & 13 & 0.41050 & 14 & 0.51528 \\
+  $2\times 10^{1}$ & 12 & 0.22475 & 13 & 0.23063 & 14 & 0.22775 \\
+  $4\times 10^{1}$ & 12 & 0.08977 & 13 & 0.18012 & 14 & 0.09924 \\
+  $6\times 10^{1}$ & 12 & 0.04551 & 13 & 0.11266 & 14 & 0.05686 \\
+  $8\times 10^{1}$ & 12 & 0.11030 & 13 & 0.14514 & 14 & 0.07167 \\
+  $2\times 10^{2}$ & 12 & 0.05531 & 13 & 0.10100 & 14 & 0.06952 \\
+  $4\times 10^{2}$ & 12 & 0.03976 & 13 & 0.08003 & 14 & 0.08053 \\
+  $6\times 10^{2}$ & 12 & 0.04149 & 13 & 0.10692 & 14 & 0.07349 \\
+  $8\times 10^{2}$ & 12 & 0.08603 & 13 & 0.08345 & 14 & 0.05539 \\
+  $1\times 10^{3}$ & 12 & 0.03088 & 13 & 0.05865 & 14 & 0.04527 \\
+  $2\times 10^{3}$ & 12 & 0.03016 & 13 & 0.05151 & 14 & 0.06093 \\
+  $4\times 10^{3}$ & 12 & 0.02847 & 13 & 0.05485 & 14 & 0.07131 \\
+  $1\times 10^{4}$ & 12 & 0.03881 & 13 & 0.05962 & 14 & 0.06285 \\
+  $2\times 10^{4}$ & 12 & 0.04244 & 13 & 0.05890 & 14 & 0.05621 \\
+  $4\times 10^{4}$ & 12 & 0.05165 & 13 & 0.05988 & 14 & 0.05947 \\
+  $1\times 10^{5}$ & 12 & 0.05158 & 13 & 0.05587 & 14 & 0.05421 \\
+  $2\times 10^{5}$ & 12 & 0.05437 & 13 & 0.05419 & 14 & 0.05554 \\
+  $4\times 10^{5}$ & 12 & 0.05547 & 13 & 0.05478 & 14 & 0.05373 \\
+  $1\times 10^{6}$ & 12 & 0.05474 & 13 & 0.05523 & 14 & 0.05548 \\
+  $2\times 10^{6}$ & 12 & 0.05488 & 13 & 0.05530 & 14 & 0.05486 \\
+  \midrule
+  % ------------------ seeds 15-17 ------------------
+  $8\times 10^{0}$ & 15 & 0.40573 & 16 & 0.28601 & 17 & 0.60065 \\
+  $2\times 10^{1}$ & 15 & 0.19283 & 16 & 0.13611 & 17 & 0.39442 \\
+  $4\times 10^{1}$ & 15 & 0.06599 & 16 & 0.04330 & 17 & 0.21679 \\
+  $6\times 10^{1}$ & 15 & 0.13335 & 16 & 0.07528 & 17 & 0.09581 \\
+  $8\times 10^{1}$ & 15 & 0.15415 & 16 & 0.07955 & 17 & 0.08667 \\
+  $2\times 10^{2}$ & 15 & 0.03598 & 16 & 0.13615 & 17 & 0.09558 \\
+  $4\times 10^{2}$ & 15 & 0.04225 & 16 & 0.06362 & 17 & 0.07509 \\
+  $6\times 10^{2}$ & 15 & 0.03577 & 16 & 0.08791 & 17 & 0.06979 \\
+  $8\times 10^{2}$ & 15 & 0.06061 & 16 & 0.04076 & 17 & 0.08318 \\
+  $1\times 10^{3}$ & 15 & 0.06287 & 16 & 0.07264 & 17 & 0.05138 \\
+  $2\times 10^{3}$ & 15 & 0.04726 & 16 & 0.05465 & 17 & 0.05652 \\
+  $4\times 10^{3}$ & 15 & 0.04929 & 16 & 0.05698 & 17 & 0.05701 \\
+  $1\times 10^{4}$ & 15 & 0.05145 & 16 & 0.05180 & 17 & 0.06359 \\
+  $2\times 10^{4}$ & 15 & 0.05269 & 16 & 0.04491 & 17 & 0.04944 \\
+  $4\times 10^{4}$ & 15 & 0.05832 & 16 & 0.05266 & 17 & 0.05839 \\
+  $1\times 10^{5}$ & 15 & 0.05472 & 16 & 0.05457 & 17 & 0.05514 \\
+  $2\times 10^{5}$ & 15 & 0.05595 & 16 & 0.05324 & 17 & 0.05554 \\
+  $4\times 10^{5}$ & 15 & 0.05508 & 16 & 0.05441 & 17 & 0.05590 \\
+  $1\times 10^{6}$ & 15 & 0.05548 & 16 & 0.05410 & 17 & 0.05523 \\
+  $2\times 10^{6}$ & 15 & 0.05512 & 16 & 0.05539 & 17 & 0.05547 \\
+  \midrule
+  % ------------------ seeds 18-19 21 ------------------
+  $8\times 10^{0}$ & 18 & 0.53319 & 19 & 0.11609 & 42 & 0.60065 \\
+  $2\times 10^{1}$ & 18 & 0.19977 & 19 & 0.22155 & 42 & 0.19456 \\
+  $4\times 10^{1}$ & 18 & 0.09984 & 19 & 0.15444 & 42 & 0.15529 \\
+  $6\times 10^{1}$ & 18 & 0.06120 & 19 & 0.14433 & 42 & 0.15501 \\
+  $8\times 10^{1}$ & 18 & 0.11460 & 19 & 0.06826 & 42 & 0.06366 \\
+  $2\times 10^{2}$ & 18 & 0.08809 & 19 & 0.10029 & 42 & 0.11707 \\
+  $4\times 10^{2}$ & 18 & 0.06222 & 19 & 0.05137 & 42 & 0.03626 \\
+  $6\times 10^{2}$ & 18 & 0.03794 & 19 & 0.03943 & 42 & 0.04408 \\
+  $8\times 10^{2}$ & 18 & 0.06252 & 19 & 0.03544 & 42 & 0.05447 \\
+  $1\times 10^{3}$ & 18 & 0.04947 & 19 & 0.02316 & 42 & 0.06465 \\
+  $2\times 10^{3}$ & 18 & 0.04199 & 19 & 0.06348 & 42 & 0.05336 \\
+  $4\times 10^{3}$ & 18 & 0.05902 & 19 & 0.04765 & 42 & 0.06139 \\
+  $1\times 10^{4}$ & 18 & 0.04098 & 19 & 0.04385 & 42 & 0.06739 \\
+  $2\times 10^{4}$ & 18 & 0.05439 & 19 & 0.04534 & 42 & 0.05820 \\
+  $4\times 10^{4}$ & 18 & 0.05596 & 19 & 0.04836 & 42 & 0.05295 \\
+  $1\times 10^{5}$ & 18 & 0.05550 & 19 & 0.05204 & 42 & 0.05334 \\
+  $2\times 10^{5}$ & 18 & 0.05445 & 19 & 0.05548 & 42 & 0.05569 \\
+  $4\times 10^{5}$ & 18 & 0.05478 & 19 & 0.05588 & 42 & 0.05685 \\
+  $1\times 10^{6}$ & 18 & 0.05530 & 19 & 0.05471 & 42 & 0.05522 \\
+  $2\times 10^{6}$ & 18 & 0.05477 & 19 & 0.05435 & 42 & 0.05500 \\
+
+\end{longtable}
+

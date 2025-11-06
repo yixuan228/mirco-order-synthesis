@@ -1,0 +1,8 @@
+# folders
+# Data folder
+data/       
+# Papers
+Text Material/
+
+# ignore __pycache__
+*.pyc

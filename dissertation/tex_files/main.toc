@@ -1,0 +1,37 @@
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}%
+\contentsline {section}{\numberline {2}Literature Review}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Agent-based Simulation and Demand Modelling in Last-mile Delivery}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Synthetic Order Generation}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Research Gap}{9}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Data}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}United Kingdom Census Data}{10}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Data Granularity}{10}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Census Data Products}{11}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}E-commerce Reports}{12}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Methodology}{13}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Framework Structure}{13}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Synthetic Population}{14}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Iterative Proportional Fitting}{14}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Generate Synthetic Population According to Weights}{16}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Generate Population Address According to Landuse}{16}{subsubsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.3}E-commerce Customer Shopping Behaviour Modelling}{16}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Fuzzy Logic Inference}{17}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Three-step E-commerce Customer Behaviour Chain Modelling}{19}{subsubsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.4}Synthetic Order Generation}{21}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Verification and Validation}{22}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}Verification and Validation Framework}{22}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Measure of Distribution Similarity, Jensen-Shannon Divergence}{22}{subsubsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.3}Synthetic Population Validation}{23}{subsubsection.4.5.3}%
+\contentsline {subsubsection}{\numberline {4.5.4}Synthetic Order Validation}{23}{subsubsection.4.5.4}%
+\contentsline {section}{\numberline {5}Case Study and Results}{24}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Research Area}{24}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Synthetic Population}{25}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Synthetic Order}{26}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Web-based Result Visualisation}{30}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Conclusion and Discussion}{30}{section.6}%
+\contentsline {section}{References}{32}{section*.14}%
+\let \numberline \tmptocnumberline 
+\contentsline {section}{\numberline {Appendix ~A}List of Abbreviation}{36}{appendix.A}%
+\contentsline {section}{\numberline {Appendix ~B}Fuzzy Inference System}{37}{appendix.B}%
+\contentsline {section}{\numberline {Appendix ~C}Jenson-Shannon Divergence of Synthetic Population}{41}{appendix.C}%
+\contentsline {section}{\numberline {Appendix ~D}Jenson-Shannon Divergence of Synthetic Order}{42}{appendix.D}%

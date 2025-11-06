@@ -1,0 +1,1197 @@
+\documentclass[12pt,number]{IC_fyp}
+\usepackage{a4wide,amsmath,amssymb,epsfig, authordate1-4} 
+\usepackage{graphicx} % 用于插入图片
+\usepackage{atbegshi} % 可以在页面开始时插入内容
+
+\usepackage{float}
+% \usepackage[small]{caption}
+\usepackage[tight]{subfigure}
+
+\usepackage{xcolor}   % For color control
+\usepackage{graphicx} % For images
+\usepackage{array}    % For fixed-width columns
+\usepackage{booktabs} % For professional-looking tables
+\usepackage{caption}  % For caption formatting
+\usepackage{tabularx} % For fulfil cell in table
+\usepackage{multirow} % For row merge in table
+\usepackage{datatool} % For abbreviation table
+\usepackage{longtable}% For long table
+\usepackage{makecell} % For change line in table
+\usepackage[
+    colorlinks=true,    % use color instead of boundingbox
+]{hyperref}
+
+% Add Imperial Logo
+\newlength{\logowidth} \setlength{\logowidth}{70mm}  % width
+\newlength{\logopad}   \setlength{\logopad}{0mm}  % space to margin
+
+\AtBeginShipoutFirst{%
+  \put(0,0){%
+    \parbox[t][\paperheight][t]{\paperwidth}{%
+      \vspace*{\logopad} % adjust v-space
+      \hspace*{\logopad} % adjust h-space
+      \includegraphics[width=\logowidth]{Figures/IC_New_Logo.pdf} % control width
+      \vfill
+    }%
+  }%
+}
+
+\urlstyle{same} % For url front
+% \bibliographystyle{authordate2} % 
+\floatstyle{plaintop}
+\restylefloat{table}
+
+\renewcommand{\listfigurename}{List of Figures}
+\renewcommand{\listtablename}{List of Tables}
+% \renewcommand{\UrlFont}{\normalfont\itshape} % change to italic url
+
+\DTLnewdb{acronyms}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{ILA}\DTLnewdbentry{acronyms}{full}{Inner London Area}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{GLA}\DTLnewdbentry{acronyms}{full}{Greater London Area}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{ONS}\DTLnewdbentry{acronyms}{full}{Office for National Statistics}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{OA}\DTLnewdbentry{acronyms}{full}{Output Area}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{LSOA}\DTLnewdbentry{acronyms}{full}{Lower layer Super Output Area}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{MSOA}\DTLnewdbentry{acronyms}{full}{Middle layer Super Output Area}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{LAD}\DTLnewdbentry{acronyms}{full}{Local Authority District, or Borough in Inner Lonondon Area}
+
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{IPF}\DTLnewdbentry{acronyms}{full}{Iterative Proportional Fitting}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{MASS--GT}\DTLnewdbentry{acronyms}{full}{Multi-Agent Simulation System for Goods Transport}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{MNL}\DTLnewdbentry{acronyms}{full}{Multinomial Logit}
+
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{OSM}\DTLnewdbentry{acronyms}{full}{OpenStreetMap}
+
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{MF}\DTLnewdbentry{acronyms}{full}{Membership Function}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{FIS}\DTLnewdbentry{acronyms}{full}{Fuzzy Inference System}
+
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{JSD}\DTLnewdbentry{acronyms}{full}{Jensen-Shannon Distance}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{KLD}\DTLnewdbentry{acronyms}{full}{Kullback-Leibler Divergence}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{KS Statistic}\DTLnewdbentry{acronyms}{full}{Kolmogorov-Smirnov Statistic}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{TVD}\DTLnewdbentry{acronyms}{full}{Total Variation Distance}
+\DTLnewrow{acronyms}\DTLnewdbentry{acronyms}{abbr}{VRP}\DTLnewdbentry{acronyms}{full}{Vehicle Routing Problem}
+
+
+\begin{document}
+\hypersetup{
+  % colorlinks=true,    % use color instead of boundingbox
+  linkcolor=black,    % content and equation color
+  citecolor=cyan,     % \shortcite color
+  urlcolor=black,       % hyperlink color
+  filecolor=black,      
+}
+
+% Dissertation Cover
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  
+  {\Huge\bfseries A Data-Efficient Demand Generation Framework for Multi-Agent Last-Mile Delivery via Fuzzy Logic \par}
+  \vspace{1.5cm}
+  
+  {\Large Yixuan Li\par}
+  {\large CID: 06013045\par}
+  \vspace{1cm}
+  
+  {\large Supervised by \\ Professor Panagiotis Angeloudis\par}
+  \vspace{0.5cm}
+  \vfill
+  
+  {\large Imperial College London \par}
+  {\large Department of Civil and Environmental Engineering \par}
+  {\large 29th August, 2025 \par}
+\end{titlepage}
+
+
+% Table of Content
+\tableofcontents  % table of contents
+
+\newpage
+\listoffigures  % table of figures
+\listoftables  % table of tables
+
+\newpage
+\title{A Data-Efficient Demand Generation Framework for Multi-Agent Last-Mile Delivery via Fuzzy Logic}
+
+\author{Yixuan Li}
+
+\address{Department of Civil and Environmental Engineering\\
+  Imperial College London}
+
+\begin{frontmatter}
+  
+\begin{abstract}
+
+With the rapid development of e-commerce platforms, last-mile logistics systems face increasing requirements for efficient and environmentally friendly delivery. 
+To optimize and validate delivery strategies, last-mile delivery simulation with realistic demand distribution has become essential. 
+However, existing methods that generate last-mile delivery demand mainly rely on proprietary data, which is often opaque due to commercial sensitivity, and are limited in scalability and interpretability.
+To address these challenges, this study proposes a population-based framework for synthetic order generation. 
+The framework first generates a synthetic population using open source datasets and constructs an e-commerce behaviour model based on fuzzy inference, informed by insights from e-commerce industry reports. 
+Orders are then generated using the Monte Carlo sampling module. 
+For validation, Jensen-Shannon Divergence is employed to quantify the alignment between synthetic orders and real-world distribution. A case study in the Inner London Area demonstrates that as the scale of the synthetic population increases, the distribution of synthetic orders increasingly aligns with the overall purchasing trends in the UK, validating the effectiveness of the proposed inference system. 
+The proposed framework exhibits strong scalability, interpretability, and reproducibility, making it suitable for future applications in last-mile delivery simulation and optimization systems.
+
+\end{abstract}
+
+\end{frontmatter}
+
+\section{Introduction}
+
+In recent decades, e-commerce has expanded rapidly, with its market size continuing to grow and accelerating further during the COVID-19 pandemic \cite{eurostat_COVID19impact,ons_COVID19impact}.
+According to Statista \shortcite{statista_global_ecommerce24}, global e-commerce revenues will reach approximately 6,477 billion U.S. dollars in 2029. 
+In the United Kingdom, revenues are estimated at 185.97 billion U.S. dollars in 2029, with a market penetration of 97.25\% \cite{statista_uk_shopping25_statistic}. 
+This trend has directly driven an explosive increase in last-mile delivery demand, making it one of the most critical and challenging components of urban freight systems \cite{statista_global_ecommerce24,review_LR}. 
+
+To improve the efficiency and reliability of last-mile delivery, numerous optimisation algorithms and scheduling strategies have been proposed by academia \cite{review_LR2}, whose effectiveness typically requires validation through simulation experiments. 
+Such simulations rely heavily on rich and realistic datasets, with demand data serving as the foundation for building credible models. 
+Current data generation methods can be broadly categorised into four types: proportional mapping, discrete choice models, regression models, and hybrid models. 
+Specifically, proportional mapping directly allocates macro-level statistics or operational records to individual agents based on population or firm weights; 
+discrete choice models decompose the purchasing process into a sequence of decision chains; 
+regression models quantify the relationship between purchase behaviour and its influencing factors; 
+while hybrid models integrate survey data with statistical inference to enhance model interpretability.
+
+However, these four approaches share three major limitations. 
+First, they suffer from limited reproducibility. 
+Due to data governance restrictions such as personal privacy protection, order-level datasets containing individual information are difficult to access; moreover, many records involve commercially sensitive information, which firms are reluctant to disclose. Second, most methods rely on a single data source, which may introduce sample bias and compromise the transferability of the results. 
+Third, they generally fail to incorporate customer-specific characteristics into the modelling process, leading to low interpretability as well as limited scalability and flexibility for future extensions.
+
+To address these challenges, this study makes two key contributions:
+
+\begin{itemize}
+  \item It proposes a comprehensive population-feature-based framework for generating synthetic orders. 
+  The framework first constructs a synthetic population using the 2021 UK census data, and then applies a fuzzy inference system (FIS) combined with Monte Carlo sampling to model e-commerce purchasing behaviour and generate synthetic orders.
+
+  \item It demonstrates and validates the applicability of the proposed framework through a case study in the Inner London Area (ILA), where the generated synthetic orders are benchmarked against third-party statistical data for verification.
+\end{itemize}
+
+This framework offers several key advantages.
+First, instead of relying on proprietary order-level datasets, it exclusively uses publicly available data.
+Specifically, the framework employs the 2021 UK census data to generate the synthetic population and integrates multiple open-source reports to construct the FIS-based behaviour model, thereby enhancing reproducibility and transparency. 
+Second, the framework leverages multiple data sources and mitigates the risk of sample bias, improving the transferability of results across contexts. 
+Third, by explicitly modelling e-commerce customer behaviour through FIS IF-THEN rules, the framework incorporates customer-specific characteristics, leading to improved interpretability as well as greater scalability and flexibility in future extension. 
+
+The remainder of this paper is organised as follows. 
+Chapter \ref{sec:literature} reviews existing research on synthetic demand modelling in last-mile delivery simulation, highlighting current methodologies, their applications, and limitations in capturing demographic-driven e-commerce customer behaviours. 
+Chapter \ref{sec:data} introduces the details of the spatial granularity and relevant data sources used for constructing the proposed framework. 
+Chapter \ref{sec:methodology} presents the proposed framework, including the overall structure, the synthetic population and synthetic order generation method, and the validation and verification procedures applied to ensure the effectiveness of the proposed method. 
+Chapter \ref{sec:results} introduces the case study area (ILA), summarises the results, including the sample of the synthetic instances, validation metrics and analysis regards to them, while Chapter \ref{sec:conclusion} concludes the study with a discussion of key findings, implications for last-mile logistics modelling, limitations and potential directions for future research.
+
+
+\section{Literature Review}
+\label{sec:literature}
+
+This section begins with a review of agent-based simulation methods, summarising commonly used demand modelling approaches, including Proportional Mapping, Discrete Choice Models, Regression Models and Behaviour-Structure Hybrid Models.
+It then compares their characteristics, applicability, and limitations, providing a theoretical foundation and motivation for the population-feature-based framework proposed in this study.
+
+\subsection{Agent-based Simulation and Demand Modelling in Last-mile Delivery}
+
+Accurate modelling of last-mile delivery is essential for efficient urban logistics planning. 
+Currently, extensive research has explored simulation frameworks and logistics functions for last-mile delivery. 
+
+To address the surge in parcel volumes driven by the rapid growth of B2C e-commerce and its resulting pressures on traffic and the environment, Bienzeisler Lasse \shortcite{bienzeisler_matsim2025} proposed a regional agent-based freight simulation framework using MATSim. 
+Unlike previous studies that focus on a single city and small-scale samples, this framework leverages real demand data from a parcel delivery company in Hanover, Germany, and extrapolates it to the entire industry, simulating approximately 200,000 deliveries per day. 
+The study first constructs a regional transport network and synthetic population covering both roads and public transit, then incorporates multiple carriers and vehicle fleets into the MATSim freight extension, and finally identifies eight typical spatial zones through geographic clustering to enable comparative analysis across urban, suburban, and rural areas.
+Michiel de Bok et al. \shortcite{michiel_massGT2025} proposed an agent-based model for urban- and regional-scale freight policy evaluation, called MASS-GT (Multi-Agent Simulation System for Goods Transport). 
+The model centers on multi-agents, for example, shippers, carriers, and production/consumption firms, and integrates discrete choice, heuristic scheduling, and network assignment algorithms to connect the full chain: freight generation, vehicle scheduling, road assignment, and emission accounting. 
+It enables scenario analysis for various policies, including low-emission zones, road pricing, micro-hubs, and crowdsourcing.
+Sebastian Hörl et al. \shortcite{horl_equasim2023} proposed an open-source and reproducible modelling pipeline: starting from public data to generate population and travel demand, then inferring residential parcel demand, and finally using JSprit to solve the time-windowed pickup-and-delivery vehicle routing problem to evaluate the last-mile performance of autonomous delivery robots, demonstrated on the Confluence peninsula in Lyon, France. 
+
+In these studies, demand serves as the input for subsequent simulations, but its generation process is often simplified. 
+For example, Bienzeisler Lasse \shortcite{bienzeisler_matsim2025} directly extrapolated actual company micro-demand to the entire industry based on market share, without modelling individual delivery behaviours in detail. 
+Michiel de Bok et al. \shortcite{michiel_massGT2025} rely directly on historical travel diaries to generate synthetic demand.
+Hörl et al. \shortcite{horl_equasim2023} discretised  annual purchase frequencies into daily parcel counts using a Poisson distribution, focusing on aggregate demand rather than individual delivery features. Other approaches rely directly on historical travel diaries to generate synthetic demand. These simplifications allow large-scale simulations while abstracting away fine-grained details of individual deliveries.
+
+
+\subsection{Synthetic Order Generation}
+
+At the micro level, existing methods for demand generation can be broadly classified into four categories: proportional mapping, regression models, discrete choice models, and hybrid models.
+Related studies and their corresponding data sources and methods are listed in Table \ref{tab:freight_models}.
+
+\begin{table}[htbp]
+  \centering
+  % \small % use smaller font size
+  \caption{Comparison of Methods and Data Sources across Different Simulation Frameworks}
+  \label{tab:freight_models}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{
+    >{\centering\arraybackslash}m{3cm} 
+    >{\centering\arraybackslash}m{2.8cm} 
+    >{\raggedright\arraybackslash}m{4.5cm} 
+    >{\centering\arraybackslash}m{4.5cm} 
+    >{\centering\arraybackslash}m{5cm}}
+  \toprule
+  \textbf{Framework} & \textbf{Method} & \textbf{Data Source} & 
+  \textbf{Algorithms Idea} & 
+  \makecell{\textbf{Applied City \&} \\ \textbf{Use Case}} \\
+  \midrule
+
+  \makecell{MATSim-freight \\ Bienzeisler, L. \\ \shortcite{bienzeisler_matsim2025}} & 
+  Proportional Mapping & 
+  MiD 2017 [58k records] \shortcite{miD2017}; Logistics Services Provider operator data* & 
+  Operator data extrapolated based on market share & 
+  Germany - Greater Hannover (urban--suburban--rural); unified carrier evaluation, locker coverage estimation \\
+  \midrule
+
+  \makecell{MASS-GT \\ de Bok, M. et al. \\ \shortcite{michiel_massGT2025}} & 
+  Discrete Choice Model & 
+  XML truck trip diaries [2.65 M records] \shortcite{cbs_opendata}; Mobility Panel Netherlands, Online orderings [6k records] \shortcite{MPN_2015} & 
+  Ordered Logit assigns frequency (0--4 bins), then expanded to daily count & 
+  Netherlands: National-level (Rotterdam, Amsterdam pilot); includes policy modules (crowdsourcing, micro-hubs) \\
+  \midrule
+
+  \makecell{Eqasim-based \\ H\"orl \& Puchinger \\ \shortcite{horl_equasim2023}} & 
+  Hybrid Models & 
+  Survey Achats D\'ecoupl\'es de M\'enages [2k records] \shortcite{ADM_2016} &
+  IPF constrains annual e-commerce frequency to occupation, age, and household size margins; Poisson sample daily parcels & 
+  France - Lyon Metro Area; used in robotic VRP (Vehicle Routing Problem) scenario analysis \\
+  \midrule
+
+  \makecell{LogiTopp \\ Reiffer et al.\\ \shortcite{reiffer_logitopp2023}} & 
+  Discrete Choice Model \& Regression Model & 
+  Online survey [1k records]*; MiD 2017 [58k records] \shortcite{miD2017} & 
+  Three discrete choices (e-commerce participation, order quantity, delivery location) & 
+  Germany - Karlsruhe; joint passenger-freight evaluation for locker deployment and failed delivery strategies \\
+  \midrule
+
+  \makecell{Spatial ABM \\ Calabr\`o et al.\\ \shortcite{calabro_spatialABM_2023}} & 
+  Proportional Mapping & 
+  National census statistics (Italian Statistic Institute) \shortcite{istat_dataset} & 
+  GIS analysis -- spatially assigning e-commerce demands based on statistics reports & 
+  Catania (Southern Italy); compared fragmented door-to-door deliveries with consolidation-based strategies \\
+  \midrule
+
+  \makecell{SimMobility \\ Cheng et al. \\ \shortcite{cheng_simMobility2020}} &
+  Regression Model & 
+  Parcel delivery record [1.7M record]* & 
+  Linear regression of parcel demand vs. urbanization, transit, and shopping accessibility & 
+  Singapore; used for night-time delivery, time-restricted zones, micro-hub sandbox modeling \\
+  
+  \bottomrule
+  \end{tabular}
+}
+  \vspace{1mm} \par
+  \footnotesize
+  {\raggedright
+  \textit{Note: Data source with * means the data is proprietary data.}\par}
+\end{table}
+  
+
+\textit{Proportional Mapping} This approach directly allocates macro-level statistics or operational records to individual agents based on population or firm weights. 
+For example, in the MATSim-freight model \cite{bienzeisler_matsim2025}, parcel volumes are estimated as a linear combination of population and firm count and then assigned to the nearest household or firm. 
+Similarly, Calabr\`o et al. \shortcite{calabro_spatialABM_2023} spatially allocate e-commerce orders to zones based on national statistics, with residents classified according to age and purchasing frequency.
+
+\textit{Discrete Choice Models} This category decomposes the purchase process into a chain of decisions, such as whether to buy, how many to buy, delivery method and time window. 
+These choices are modelled using Binary Logit \cite{reiffer_logitopp2023}, Multinomial Logit (MNL) \cite{reiffer_logitopp2023}, or Ordered Logit \cite{michiel_massGT2025}, producing probability distributions as outputs. 
+A representative case is the LogiTopp framework proposed by Reiffer et al. \shortcite{reiffer_logitopp2023}. 
+They proposed a decision chain to model the customer behaviour, including modelling e-commerce participation using Binary Logit, and modelling delivery location using the MNL model.
+MASS-GT \cite{michiel_massGT2025}, in turn, applies an Ordered Logit to assign shopping frequency (0-4 bins), which is then expanded into daily parcel counts.
+
+\textit{Regression Models} These models quantify the relationship between purchase frequency with its impact factors.
+For instance, in the LogiTopp framework \cite{reiffer_logitopp2023}, a Poisson regression was employed to model the purchase behaviour across different ages and occupations.
+Similarly, in the SimMobility framework proposed by Cheng et al. \shortcite{cheng_simMobility2020}, Linear regression was used to estimate the parcel demand based on urbanization rate, shopping accessibility and other factors.
+
+\textit{Behaviour-Structure Hybrid Models} 
+This approach integrates survey data with statistical inference. 
+Typically, annual purchase frequencies are first assigned to households via surveys or Iterative Proportional Fitting (IPF), followed by the use of a Poisson distribution to generate daily parcel volumes. 
+Delivery time windows are then inferred from individual activity chains. 
+For instance, the Eqasim framework in Lyon \cite{horl_equasim2023} applies a three-dimensional IPF to estimate annual frequencies, a Poisson model to generate daily counts, and extracts at-home windows from activity chains to determine delivery feasibility.
+
+Despite their differences, these four approaches share some major limitations. 
+First, they generally require large volumes of detailed data to support reliable parameter estimation and calibration, and many of those sources are proprietary data that hinder the reproducibility, as indicated in Table \ref{tab:freight_models}. 
+Second, when training algorithms such as discrete choice models, most models rely on a single data source, which increases the risk of sample bias and limits flexibility for future extensions. 
+In addition, they are often criticised for their limited intuitiveness and interpretability.
+
+
+\subsection{Research Gap}
+
+In last-mile logistics demand modelling, micro-level demand generation constitutes the initial step and serves as a critical component of both algorithms and simulation frameworks. 
+A more realistic representation of real-world demand can, to a certain extent, ensure the transferability and validity of the overall simulation system. 
+However, existing studies often rely heavily on large volumes of real-world data. 
+In practice, data scarcity and privacy constraints pose significant challenges to such approaches. 
+Hence, there is an urgent need for a more flexible and human-centred methodology that can reduce data dependency while capturing uncertainty and improving model applicability.
+
+Moreover, current methods generally fail to adequately account for consumer heterogeneity, such as demographic characteristics (e.g., gender, age) and behavioural preferences. 
+At the same time, the reliance on single-source datasets limits the robustness and applicability of these models. 
+Therefore, it is necessary to develop a new modelling framework that addresses these limitations:
+\begin{itemize}
+  \item \textbf{Enhanced reproducibility and privacy protection:} Utilise open data sources to protect privacy, reducing reliance on proprietary or commercially sensitive datasets. 
+  \item \textbf{Improved robustness and transferability:} Leverage multi-source data to mitigate sample bias, enhancing scalability and applicability across different contexts.  
+  \item \textbf{Better representation of consumer heterogeneity:} Explicitly model customer-specific characteristics, including demographic attributes, thereby increasing interpretability.
+\end{itemize}
+
+
+
+\section{Data}
+\label{sec:data}
+
+This section describes the datasets used in this study, which primarily include the 2021 UK census data for generating the synthetic population, as well as industry reports and academic literature on online shopping behaviour for constructing the FIS and generating synthetic orders.
+
+
+
+\subsection{United Kingdom Census Data}
+\subsubsection{Data Granularity}
+
+The United Kingdom Population Census is a nationwide survey conducted every ten years to collect comprehensive information about every person and household, with the most recent taking place in 2021 for England, Wales, and Northern Ireland \cite{uk_census}.
+It is administered by the Office for National Statistics (ONS) in England and Wales, the National Records of Scotland, and the Northern Ireland Statistics and Research Agency. 
+The census provides an accurate snapshot of the population's size, structure, and detailed demographic features.
+
+The statistical summary of census data is released at multiple levels of spatial resolution to balance the analytical value and confidentiality.
+The smallest available geography is the Output Areas (OAs), and is followed by Lower layer Super Output Areas (LSOAs), Middle layer Super Output Areas (MSOAs) \cite{census_geographies}. 
+Additionally, a statistical summary of Local Authority District (LAD) is also provided by the UK Data Service \shortcite{census_lad}.
+The granularity of OA, LSOA and MSOA makes up the different levels of the census statistical geographies, and their features are compared in Table \ref{tab:geo_levels}.
+
+\begin{table}[h]
+  \centering
+  \caption{Geography Levels Comparison}
+  \label{tab:geo_levels}
+  \begin{tabular}{c c c c m{3.8cm}}
+      \toprule
+      \textbf{Geography} & \textbf{Persons} & \textbf{Households} & \textbf{Units in ILA} & \textbf{Illustration} \\
+      \midrule
+      OA   & 100 -- 625 &  40 -- 250  & 10356   & \includegraphics[width=3.5cm]{Figures/oa.pdf} \\
+      LSOA* & 1,000 -- 3,000 & 400 -- 1,200  & 1983 & \includegraphics[width=3.5cm]{Figures/lsoa.pdf} \\
+      MSOA & 5,000 -- 15,000 & 2,000 -- 6,000   & 404 & \includegraphics[width=3.5cm]{Figures/msoa.pdf} \\
+      LAD  & 8,000 -- 350,000 &  5,000 -- 140,000   & 14 & \includegraphics[width=3.5cm]{Figures/lad.pdf} \\
+      \bottomrule
+  \end{tabular}
+  \vspace{1mm} \par
+  \raggedright{\textit{Note: Geography Level with * is the final synthetic population level.}}
+\end{table}
+
+To achieve a more granular and realistic population, smaller geography units are preferred.
+However, given the varying availability of demographic feature statistics across different geography levels, the LSOA level is ultimately selected as the optimal geography level for synthetic population generation.
+
+\subsubsection{Census Data Products}
+The census results are released in different formats, including 1) Aggregate Statistics and 2) Microdata Samples.
+
+The Aggregate Statistics, provided by UK Data Service \shortcite{ukDataService} include counts and percentages for specific categories (e.g., age, sex) at various geographies. 
+As for microdata samples, for security and confidentiality considerations, micro census sample data is released in different formats and levels of access, including:
+
+\begin{itemize}
+  \item \textbf{Public Microdata Sample} Covers ~1\% of the population (604,351 persons). It contains 19 variables and a low level of detail \shortcite{ONS_public_microdata}.
+  \item \textbf{Safeguarded Microdata Sample} It includes two formats of data sample, individual microdata sample (5\%, 3,021,455 persons \shortcite{ONS_safeguarded_individual}) and household microdata sample (1\%, 263,729 households and 606,210 persons \shortcite{ONS_safeguarded_household}) with richer variables and smaller geographies.
+  This data requires UK Data Service registration.
+  \item \textbf{Secure Microdata Sample} Similar to safeguarded microdata, secure microdata also includes two formats of data sample, but with 10\% of households or individual persons. 
+  It contains the most detailed variables and a high level of detail.
+  However, this data is available only via the ONS Secure Research Service.
+\end{itemize}
+
+The comparison of different microdata sample products is shown in Table \ref{tab:microdata_products}. 
+In this study, we focus on individual-level e-commerce behaviour.
+Considering both the data detail level and accessibility, the safeguarded-level individual microdata sample is selected as the original data sample for subsequent data curation, as highlighted in Table \ref{tab:microdata_products}.
+
+
+\begin{table}
+  \centering
+  \caption{Comparison of Microdata Sample Products}
+  \label{tab:microdata_products}
+  \begin{tabular}{c c c c c}
+    \toprule
+    \textbf{Product Type} & \textbf{Level} & \textbf{Sample Rate} & \textbf{Category}  & \textbf{Availability} \\
+    \midrule
+    Public & Person & 1\% & 19 & Open Access \\
+    \textbf{Safeguarded*} & Person & 5\% & 87 & Registration \\
+    Safeguarded & Household & 1\% & 56 & Request Access \\
+    Secure & Person & 10\% & 189 & Limited \\
+    Secure & Household & 5\% & 194 & Limited \\
+    \bottomrule
+  \end{tabular}
+  \vspace{1mm} \par
+  \textit{Note: Product with * is the final microdata for subsequent steps.}
+\end{table}
+
+
+
+\subsection{E-commerce Reports}
+\label{sec:e-commerce_data}
+
+Since the development of online shopping platforms, as well as the e-commerce change after COVID-19, many studies have found the relationship between the socio-demographic characteristics of e-commerce customers and their shopping behaviour. 
+For example, according to Eurostat and findings from Colaço et al. \shortcite{colaco_ecommerce_2021}, younger people buy online more often compared to older people.
+According to statistics from Amazon \shortcite{amazon_ecommerce_statistics25} and Kráľová et al.\shortcite{Kráľová2025}, statistically significant gender differences existed in the increase in online shopping frequency and order category.
+Besides, research shows that household income \cite{cheng_simMobility2020}, level of education \cite{colaco_ecommerce_2021}, and other demographic customer features also impact the online shopping preferences.
+
+To model the e-commerce behaviour in the UK, multiple sources were used, including research articles, industry reports, third-party statistics, and the annual report of online shopping platforms, as summarised in Table \ref{tab:uk_ecommerce_sources}.
+
+% Jenson-Shannon Divergence of Synthetic Order Customer
+\begin{longtable}{c p{5.5cm} c p{5cm}}
+  \caption{Data Sources of the E-commerce Industry
+  \label{tab:uk_ecommerce_sources}} \\
+  \toprule
+  \textbf{Type} & \textbf{Title} & \textbf{Author} & \textbf{Key Topics} \\
+  \midrule
+  \endfirsthead
+  
+  \multicolumn{4}{l}{\textit{Continuation of Table \ref{tab:uk_ecommerce_sources}}}\\
+  \toprule
+  \textbf{Type} & \textbf{Title} & \textbf{Author} & \textbf{Key Topics} \\
+  \midrule
+  \endhead
+  
+  \midrule
+  \multicolumn{4}{r}{\textit{Continued on next page}} \\
+  \endfoot
+  
+  \bottomrule
+  \endlastfoot
+
+  % ------------------ seeds 0-2 ------------------
+  Article & Gender Differences in Consumer behaviour Stemming from the Dynamic Growth of E-Commerce \shortcite{Kráľová2025} & 
+  \makecell{Kráľová et al.} & 
+  Gender \& Category / Spending Amount (European Survey) 
+  \\ 
+  Article & Exploring the Relationship between Locational and Household Characteristics and E-Commerce Home Delivery Demand \shortcite{cheng_simMobility2020} & 
+  Cheng et al. & 
+  Household attributes: Age \& Income 
+  \\ 
+  Article & Exploring the Interactions between Online Shopping, In-Store Shopping, and Weekly Travel Behavior using a 7-Day Shopping Survey in Lisbon, Portugal \shortcite{colaco_ecommerce_2021} & Colaço et al. & Online-shopping preference \& Level of education
+  \\ 
+  \midrule
+  Report & E-commerce Evolution in Europe: Market Trends \& Consumer Behaviour \shortcite{evalueserve_europe25} & Evalueserve & Country-level Penetration, Category Distribution 
+  \\ 
+  Report & Descartes 2nd Annual Home Delivery Sustainability Study \shortcite{descartes_euro_consumer23} & \makecell{Descartes \\ Group} & Delivery Time Expectations, Sustainability Preferences 
+  \\ 
+  Report & E-commerce in the United Kingdom (UK) 2023 \shortcite{statista_uk_ecommerce23_survey} & Statista & Purchase Characteristics and customer features: Willingness, Frequency, Category \& Sex, Age 
+  \\
+  Report & Online Shopping Behaviour in the United Kingdom (UK) \shortcite{statista_uk_shopping25_statistic} & Statista & Consumer Habits, Online Shopping Attitudes; Category Distribution
+  \\ 
+  Report & Online Grocery Shopping in the United Kingdom (UK) \shortcite{statista_uk_grocery24_statistic} & Statista & Online-grocery trend; Consumer Habits 
+  \\ 
+  Report & E-commerce in the United Kingdom (UK) \shortcite{statista_uk_ecommerce24_statistic} & Statista & E-commerce user trend; Retail sales trend; Most popular categories
+  \\
+  Report & E-commerce Statistics for Individuals \shortcite{eurostat_euro_statistics25} & Eurostat & Customer Features: Age, Purchase Frequency 
+  \\
+  Report & Amazon Statistics: Key Numbers and Fun Facts \shortcite{amazon_ecommerce_statistics25} & \makecell{Amazon \\ Scout} & E-commerce Trend; Amazon Customer Demographics (Age) \& Top Products
+  \\
+\end{longtable}
+
+% \begin{table}
+%   \centering
+%   \caption{Data Sources of UK E-commerce Industry}
+%   \label{tab:uk_ecommerce_sources}
+%   \begin{tabularx}{\textwidth}{c X c p{5cm}}
+%     \toprule
+%     \textbf{Type} & \textbf{Title} & \textbf{Author} & \textbf{Key Topics} 
+%     \\
+%     \midrule
+%     Article & Gender Differences in Consumer behaviour Stemming from the Dynamic Growth of E-Commerce \shortcite{Kráľová2025} & 
+%     \makecell{Kráľová \& \\ Col.} & 
+%     Gender \& Category / Spending Amount (European Survey) 
+%     \\ 
+%     Article & Exploring the Relationship between Locational and Household Characteristics and E-Commerce Home Delivery Demand \shortcite{cheng_simMobility2020} & 
+%     Cheng et al. & 
+%     Household attributes: Age \& Income 
+%     \\ 
+%     Article & Exploring the Interactions between Online Shopping, In-Store Shopping, and Weekly Travel Behavior using a 7-Day Shopping Survey in Lisbon, Portugal \shortcite{colaco_ecommerce_2021} & Colaço et al. & Online-shopping preference \& Level of education
+%     \\ 
+%     \midrule
+%     Report & E-commerce Evolution in Europe: Market Trends \& Consumer Behaviour \shortcite{evalueserve_europe25} & Evalueserve & Country-level Penetration, Category Distribution 
+%     \\ 
+%     Report & Descartes 2nd Annual Home Delivery Sustainability Study \shortcite{descartes_euro_consumer23} & \makecell{Descartes \\ Group} & Delivery Time Expectations, Sustainability Preferences 
+%     \\ 
+%     Report & E-commerce in the United Kingdom (UK) 2023 \shortcite{statista_uk_ecommerce23_survey} & Statista & Purchase Characteristics $\times$ customer features: Willingness, Frequency, Category \& Sex, Age 
+%     \\
+%     Report & Online Shopping Behaviour in the United Kingdom (UK) \shortcite{statista_uk_shopping25_statistic} & Statista & Consumer Habits, Online Shopping Attitudes; Category Distribution
+%     \\ 
+%     Report & Online Grocery Shopping in the United Kingdom (UK) \shortcite{statista_uk_grocery24_statistic} & Statista & Online-grocery trend; Consumer Habits 
+%     \\ 
+%     Report & E-commerce in the United Kingdom (UK) \shortcite{statista_uk_ecommerce24_statistic} & Statista & E-commerce user trend; Retail sales trend; Most popular categories
+%     \\
+%     Report & E-commerce Statistics for Individuals \shortcite{eurostat_euro_statistics25} & Eurostat & Customer Features: Age, Purchase Frequency 
+%     \\
+%     Report & Amazon Statistics: Key Numbers and Fun Facts \shortcite{amazon_ecommerce_statistics25} & \makecell{Amazon \\ Scout} & Ecommerce Trend; Amazon Customer Demographics (Age) \& Top Products
+%     \\
+%     \bottomrule
+%   \end{tabularx}
+% \end{table}
+
+
+In this study, synthetic orders are generated based on population demographic characteristics (e.g., age, sex, employment, etc.). Therefore, it is essential to model the e-commerce behaviour as a function of based on these demographic attributes.
+Among the sources listed in Table \ref{tab:uk_ecommerce_sources}, those containing customer demographic attributes can be employed to identify behavioural patterns or shopping preferences associated with specific population types, such as findings from Cheng et al. \shortcite{cheng_simMobility2020},  customer-related reports from Statista, \textit{E-Commerce in the United Kingdom (UK)} \shortcite{statista_uk_ecommerce23_survey}, Amazon statistics \shortcite{amazon_ecommerce_statistics25}, Eurostat report \shortcite{eurostat_euro_statistics25}. 
+
+
+
+Conversely, sources such as \textit{Online Shopping Behaviour in the United Kingdom (UK)} \shortcite{statista_uk_shopping25_statistic} and \textit{Online Grocery Shopping in the
+United Kingdom (UK)} \shortcite{statista_uk_grocery24_statistic}, which provides only e-commerce features without customer behavioural information, such as order category distribution, can serve to validate the generated synthetic orders, as detailed in Section \ref{sec:method_order_val}.
+
+
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Framework Structure}
+
+The proposed methodology consists of three main modules: (1) synthetic population generation, (2) fuzzy logic-based e-commerce behaviour modelling, and (3) synthetic order generation derived from synthetic population.
+The generated synthetic orders are followed by a validation process.
+The framework proposed in this study is summarised in Figure \ref{fig:study_framework}, illustrating its main components and their interactions.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Figures/study_framework_portrait.pdf}
+  \caption{Framework Components and Structure}
+  \label{fig:study_framework}
+\end{figure}
+
+Section \ref{sec:syn_pop} introduces the synthetic population generation method based on IPF, which constructs a representative population reflecting the demographic characteristics of the study area. 
+Section \ref{sec:syn_ord} first presents the construction of the shopping preference model based on FIS, which captures customer purchase behavior in the e-commerce context. 
+Subsequently, Section \ref{sec:syn_ord_gen} introduces the synthetic order generation process, where Monte Carlo (MC) sampling with different assumed distributions is employed to instantiate e-commerce customer purchase decisions and produce realistic synthetic orders.
+
+\subsection{Synthetic Population}
+\label{sec:syn_pop}
+\subsubsection{Iterative Proportional Fitting}
+
+The first stage employs IPF to reconcile differences between sample microdata and aggregate census constraints. 
+The process takes the following two as input: 
+
+\textbf{(1) Census microdata:} a sample dataset of UK individuals or households, containing attributes such as age, gender, education, and income.
+In this study, safeguarded-person level microdata was chosen, as highlighted in Table \ref{tab:microdata_products}.
+Considering the subsequent steps of e-commerce behaviour modelling, only potentially relevant features were selected, generalised into broader categories and recoded, as summarised in Table \ref{tab:synpopfeature}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Synthetic Population Feature and Encoding Scheme}
+  \label{tab:synpopfeature}
+  \begin{tabularx}{\textwidth}{c X}
+    \toprule
+    \textbf{Feature Name} & \textbf{Values}
+    \\
+    \midrule
+    Age & 0 = 0--15,\; 1 = 16--29,\; 2 = 30--49,\; 3 = 50+ 
+    \\
+    Sex & 0 = Female,\; 1 = Male 
+    \\
+    Marital Status & 0 = Single,\; 1 = Married/Registered Same-sex,\; 2 = Separated/Divorced/Widowed 
+    \\
+    Economic Activity & 0 = Employed,\; 1 = Unemployed,\; 2 = Inactive 
+    \\
+    Ethnic Group & 0 = Asian,\; 1 = Black,\; 2 = Mixed,\; 3 = White,\; 4 = Other 
+    \\
+    Number of Cars and Vans & 0 = No car/van,\; 1 = 1 car/van,\; 2 = 2 cars/vans,\; 3 = 3 or more cars/vans 
+    \\
+    Approximated Social Grade & 0 = AB,\; 1 = C1,\; 2 = C2,\; 3 = DE 
+    \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\textbf{(2) Aggregate constraints:} marginal distribution for each attribute category at aspecific geography level.
+In this study, the LSOA level of aggregate constraints is chosen, as highlighted in Table \ref{tab:geo_levels}.
+The level of aggregated constraints will determine the geography level of the synthetic population.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{Figures/IPF-flowchart.pdf}
+  \caption{Flowchart of Iterative Proportional Fitting}
+  \label{fig:ipf}
+\end{figure}
+
+The flowchart of the IPF algorithm is shown in Figure \ref*{fig:ipf}. 
+It iteratively adjusts the weights of microdata records to ensure that the weighted marginal distributions match the LSOA level of aggregated statistics constraints across multiple population features. 
+
+As illustrated in \ref{fig:ipf}, starting from an initial set of weights computed from the microdata sample, IPF alternates between adjusting weights for one dimension at a time while holding the others fixed. 
+In each iteration, the weights of all records sharing a given category are scaled proportionally so that their aggregate matches the corresponding constraints. 
+This sequential adjustment continues across all dimensions, cycling repeatedly until the differences between the weighted distributions and the constraints fall below a predefined convergence threshold. 
+The final output is a synthetic population in which each individual record is assigned a calibrated weight, producing a population that exactly satisfies the aggregate constraints while preserving the underlying microdata structure. 
+This population serves as the demographic foundation for subsequent synthetic population instances generation.
+
+
+\subsubsection{Generate Synthetic Population According to Weights}
+\label{sec:samplePop}
+
+Based on the weighted results derived in the IPF step, the person type distribution for each region, LSOA unit, is determined. 
+The allocation is performed in two sequential stages: disaggregate to region, and allocate to person type. 
+
+The synthetic population size is the input of this step, and it is user-defined. 
+In the first stage, the total population is proportionally distributed across regions, according to their respective shares of the total population, based on the census statistics \shortcite{ukDataService_pop}. 
+In the second stage, the population assigned to each region is further disaggregated into specific person types in accordance with the type composition of that region. 
+When the allocated population for a region is small, priority is given to assigning individuals to types with higher weights, thereby ensuring that limited population counts are preferentially allocated to the most probable categories. 
+Fractional values arising during the allocation process are handled by computing the product of the proportion and the total population, rounding the result down to the nearest integer, and subsequently addressing any shortfall caused by rounding by sequentially assigning individuals to the highest-weight types. 
+This procedure is iteratively applied as the synthetic population size increases, thereby preserving stable and reasonable population proportions across both regions and types.
+
+
+\subsubsection{Generate Population Address According to Landuse}
+
+After obtaining the synthetic population with their demographic attributes, we utilised land use maps from OpenStreetMap (OSM) \shortcite{london_landuse} to acquire the distribution of residential areas in the London region. 
+Each individual was then randomly assigned a specific location within these residential areas to ensure a realistic and consistent spatial distribution. 
+To guarantee that all population points fall within residential areas, we initially generated a number of points exceeding the target population, and subsequently filtered out only those located within residential land use as the final population distribution.
+
+
+\subsection{E-commerce Customer Shopping Behaviour Modelling}
+\label{sec:syn_ord}
+In this study, we synthesise order instances through a two-step process, as illustrated by Figure \ref{fig:syn_ord_gen_frame}. 
+First, a fuzzy inference-based method is applied to model customer behaviour using demographic features such as age, sex and marital status, thereby establishing their e-commerce preferences such as purchase frequency, order category. 
+Second, a Monte Carlo sampling system is employed to generate instances with random seeds, based on the probability distributions derived from the synthetic population's demographic features through the FIS.
+
+\begin{figure}
+  \centering
+  \includegraphics[width = 0.95\textwidth]{Figures/syn-order-flowchart.pdf}
+  \caption{Synthetic Order Generation Flowchart}
+  \label{fig:syn_ord_gen_frame}
+\end{figure}
+
+In this study, a multi-level FIS was developed to model consumer online shopping preferences in the UK. 
+The system captures the relationships between demographic characteristics and purchasing behaviour across different product categories through a three-step modelling process.
+
+First, feasibility perception was modelled to identify the potential online shopping population, or the customers.
+Second, purchase frequency was incorporated to quantify how often consumers place orders within a given period. 
+Third, product categories were considered to capture the diversity of products purchased by individuals.
+
+By integrating these three steps, the multi-level FIS proposed a behavioural logic chain that enables a nuanced representation of consumer behaviour, linking demographic features, such as age, income, and employment, with both the frequency and variety of purchases. 
+This approach allows the system to capture heterogeneity in consumer preferences and to provide more precise insights into purchasing patterns across diverse population segments.
+
+\subsubsection{Fuzzy Logic Inference}
+
+Unlike classical binary logic, fuzzy logic allows for partial truth values ranging between 0 and 1, enabling the system to capture the inherent uncertainty and vagueness of real-world phenomena.
+
+\textit{Fuzzification} Each input variable is first mapped to a set of fuzzy linguistic variables through membership functions (MFs). 
+Commonly used membership functions include triangular (Equation \ref{equ:MF_Tri}), trapezoidal (Equation \ref{equ:MF_Tra}), and Gaussian functions (Equation \ref{equ:MF_Gauss}). 
+
+Triangular MF is defined by three parameters \(a\), \(b\), \(c\) (left, peak, right):
+
+\begin{equation}
+  \label{equ:MF_Tri}
+  \mu_{\text{tri}}(x; a, b, c) =
+  \begin{cases}
+  0, & x \le a \\
+  \frac{x-a}{b-a}, & a < x \le b \\
+  \frac{c-x}{c-b}, & b < x \le c \\
+  0, & x \ge c
+  \end{cases}
+\end{equation}
+
+Trapezoidal MF is defined by four parameters \(a\), \(b\), \(c\) and \(d\) (left foot, left top, right top, right foot):
+
+\begin{equation}
+  \label{equ:MF_Tra}
+  \mu_{\text{trap}}(x; a, b, c, d) =
+  \begin{cases}
+  0, & x \le a \\
+  \frac{x-a}{b-a}, & a < x \le b \\
+  1, & b < x \le c \\
+  \frac{d-x}{d-c}, & c < x \le d \\
+  0, & x \ge d
+  \end{cases}
+\end{equation}
+
+Gaussian MF is defined by center \(c\) and standard deviation $\sigma$:
+
+\begin{equation}
+  \label{equ:MF_Gauss}
+  \mu_{\text{gauss}}(x; c, \sigma) = \exp\left(-\frac{(x-c)^2}{2\sigma^2}\right)
+\end{equation}
+
+The degree of membership quantifies the extent to which an input belongs to a given fuzzy set, facilitating smooth transitions between linguistic categories.
+
+Among the three commonly used MFs, the triangular membership function is simple, computationally efficient, and easy to interpret, making it particularly suitable for systems with limited computational resources. 
+The trapezoidal membership function provides a plateau region, allowing a range of values to have full membership, which can offer slightly more flexibility in representing uncertain data. 
+However, it introduces additional parameters, increasing model complexity. 
+The Gaussian membership function produces smooth and continuous curves, which is beneficial for capturing gradual transitions in data; nevertheless, it requires more computational effort and careful tuning of the standard deviation parameter.
+
+As indicated by Kosheleva \shortcite{Kosheleva2021}, in practical applications, triangular and trapezoidal MFs are the most efficient ones. 
+Considering the trade-off between computational simplicity, interpretability, and modelling capability, the triangular membership function was selected for this study. 
+The MFs of each input variable (antecedent), and output variable (consequent) are listed in Appendix \ref{tab:membership_fuc}.
+Its straightforward definition and minimal parameters allow for efficient fuzzy inference while maintaining sufficient expressiveness to capture the relevant system dynamics.
+
+\textit{Rule-Based Inference} The FIS applies a set of IF-THEN rules, which are either derived from expert knowledge or learned from data. 
+For instance, a typical rule can be formulated as: 
+
+\begin{itemize}
+  \item IF input1 IS High AND input2 IS Medium THEN output IS High response
+\end{itemize}
+
+The rule evaluation is performed using fuzzy logic operators, where AND is typically modelled by the minimum operator and OR by the maximum operator.
+In this study, we retained the default settings for these logic operators. 
+
+\textit{Aggregation and Defuzzification} After evaluating all rules, the fuzzy outputs are aggregated into a single fuzzy set. 
+To produce a crisp output, a defuzzification method is then applied. 
+Depending on the application requirements, the FIS can be implemented as a Mamdani-type system, which produces fuzzy outputs and offers strong interpretability for control purposes, or a Sugeno-type system, which provides outputs as linear functions or constants and is suitable for optimisation and adaptive modelling. 
+In this study, the centroid method is adopted within a Mamdani-type framework, owing to its widespread use and its ability to provide a balanced representation of the fuzzy output for control applications. 
+
+This fuzzy logic approach allows the system to handle imprecise, noisy, or incomplete data and can model non-linear relationships without requiring explicit mathematical equations. 
+It is particularly suitable for domains where human expertise or multiple fragmented information can be aggregated and codified into fuzzy rules. 
+
+\subsubsection{Three-step E-commerce Customer Behaviour Chain Modelling} 
+
+In this study, we proposed a three-stage fuzzy inference system to simulate the online shopping behaviour chain of individuals. 
+The system proceeds through three sequential steps: availability (determining whether an individual is likely to engage in online shopping), frequency (estimating the number of online shopping orders within a given time period), and category (identifying the types of products the individual tends to purchase). 
+This design aims to closely approximate real-world online shopping processes. 
+The primary objective is to infer whether an individual has the potential to engage in online shopping, their likely shopping frequency, and the categories of products they are inclined to purchase. 
+
+\textit{Availability} According to Eurostat \shortcite{eurostat_euro_statistics25}, around 77\% population place online orders. 
+Therefore, the initial step is to use FIS to identify online customers from a synthetic population. And this is related to demographic features such as age and economic activity.
+
+\textit{Frequency} To characterise individuals' shopping frequency within specific time intervals, we first categorised frequency levels as shown in the Table \ref{tab:freq_conversion} and extracted relevant information from data sources mentioned in Section \ref{sec:e-commerce_data}, which was then transformed into IF-THEN rules to fit the purchase frequency distributions across different person types. 
+
+\begin{table}[htbp]
+  \centering
+  \caption{Order Frequency Table}
+  \label{tab:freq_conversion}
+  \begin{tabular}{c c c c c}
+    \toprule
+    \textbf{No.} & \textbf{Frequency} & \textbf{per Day} & \textbf{per Week} & \textbf{per Month} \\
+    \midrule
+    0 & Several times a day & 3.0000 & 21.0000 & 90.0000 \\
+    1 & Daily & 1.0000 & 7.0000 & 30.0000 \\
+    2 & 2-3 times a week & 0.3571 & 2.5000 & 10.7000 \\
+    3 & Once a week & 0.1429 & 1.0000 & 4.3000 \\
+    4 & 2-3 times a month & 0.0833 & 0.5814 & 2.5000 \\
+    5 & Once a month & 0.0333 & 0.2326 & 1.0000 \\
+    6 & Several times a year & 0.0137 & 0.0962 & 0.4200 \\
+    7 & Less often & 0.0027 & 0.0192 & 0.0830 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+In the subsequent sampling process, these distributions are further transformed to obtain the expectation of order frequency within a given time window, using the frequency table \ref{tab:freq_conversion}, thereby enabling sampling that better reflects realistic consumption behaviour. 
+
+\textit{Category} In the modelling of product categories, considering the requirements of downstream delivery scheme design and VRP-related optimisation problems, we not only distinguished between broad product categories but also incorporated critical factors such as volume, weight, and delivery time windows. 
+On this basis, an appropriate generalisation of product classification was performed, as detailed in the Table \ref{tab:category_values}. 
+Subsequently, we extracted IF-THEN fuzzy inference rules to model the purchase preferences of different person types for various product categories, thereby laying the foundation for subsequent delivery optimisation and strategy design.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Category Classification}
+  \label{tab:category_values}
+  \begin{tabularx}\textwidth{c X c X}
+    \toprule
+    \textbf{No.} & \textbf{Category Name} & \textbf{Size} & \textbf{Sub Category} \\
+    \midrule
+    0 & Lightweight Fashion \& Personal Care & Small & Clothing, Shoes, Accessories, Cosmetics, Body Care, Drugstore \& Health 
+    \\
+    1 & Small High-Value Electronics & Small & Consumer Electronics, Some Hobby Supplies 
+    \\
+    2 & Medium-Sized Consumer Goods & Medium & Food, Beverages, Household Care, Pet Products 
+    \\
+    3 & Cultural \& Entertainment Products & Small/Medium & Books/Music/Games, Sports, Toys \& Baby, Stationery \& Hobbies 
+    \\
+    4 & Medium-Sized Durable Home Goods & Medium & DIY \& Garden, Small Household Appliances 
+    \\
+    5 & Large Heavy Items & Large & Furniture, Large Household Appliances 
+    \\
+    6 & Travel \& Luggage Products & Medium & Luggage \& Bags \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+After the three-step modelling process, the availability-frequency-category process, we extracted a corresponding set of rules. 
+For any individual or population with different demographic feature profiles, these rules can be used to calculate the probability distribution of outcomes at each decision step. 
+These probability distributions provide the basis for subsequent Monte Carlo sampling.
+
+
+\subsection{Synthetic Order Generation}
+\label{sec:syn_ord_gen}
+
+During the sampling stage, in order to reduce computation time, a representative-based calculation approach was adopted. 
+Specifically, since large populations contain repeated individuals with identical demographic characteristics, we first extracted representative individuals, each corresponding to a group of people sharing the same e-commerce behavioural traits. 
+In the multi-layer inference system, for the same group, the three-step decision probability distributions (availability, frequency, and category) are identical. 
+Therefore, it is sufficient to compute the probability distributions for each representative and associate them with the entire synthetic population.
+
+Availability refers to the probability that an individual may become an online customer, with a probability ranging from 0 to 1. 
+Monte Carlo sampling is performed using a Bernoulli distribution (Equation \ref{equ:bernoulli}) based on this probability.
+
+\begin{equation}
+  \label{equ:bernoulli}
+  \begin{aligned}
+    X \sim \text{Bernoulli}(p)&, \\
+    P(X=x) = p^x (1-p)^{1-x}&, \quad x \in \{0,1\}
+    \end{aligned}
+\end{equation}
+
+Frequency refers to the number of orders one customer would place within the study period.
+The number of orders is then assumed to follow a Poisson distribution (Equation \ref{equ:poisson}), which is typically used to model the number of discrete events occurring within a fixed period.
+Therefore, the expectation of frequency is calculated using the order frequency table (Table \ref{tab:freq_conversion}), with each frequency category weighted by its corresponding probability. 
+In this study, the time window is set to one week. 
+Monte Carlo sampling is then applied based on these distributions.
+
+\begin{equation}
+  \label{equ:poisson}
+  \begin{aligned}
+    X \sim \text{Poisson}(\lambda)&, \\
+    P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}&, \quad k = 0,1,2,\dots
+    \end{aligned}
+\end{equation}
+
+Category refers to the type of products purchased, as listed in Table \ref{tab:category_values}. 
+Monte Carlo sampling is conducted using random sampling from a discrete distribution (Equation \ref{equ:discrete}) to assign product categories for each order.
+
+\begin{equation}
+  \label{equ:discrete}
+  \begin{aligned}
+    X \sim \text{Discrete}(\{x_1, x_2, \dots, x_n\}&, \{p_1, p_2, \dots, p_n\}), \\
+    P(X = x_i) = p_i&, \quad i = 1,2,\dots,n
+    \end{aligned}
+\end{equation}
+
+Order details refer to order features such as order value, weight, and size. 
+After obtaining the category of each order, these details were assigned accordingly.
+Due to the insufficient statistical information (e.g., mean and variance) on the weight and size of different categories in last-mile delivery, we combined relevant sources \cite{statista_uk_shopping25_statistic} with the weight standards used when classifying the categories, assuming normal distributions for each category (Equation \ref{equ:normal}). 
+Normal distribution sampling was then performed for the price and weight of each order. 
+
+\begin{equation}
+  \label{equ:normal}
+  \begin{aligned}
+    X \sim \mathcal{N}(\mu, \sigma^2)&, \\
+    f_X(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \Big( -\frac{(x-\mu)^2}{2\sigma^2} \Big)&, \quad x \in \mathbb{R}
+  \end{aligned}
+\end{equation}
+
+
+This process in this subsection ultimately yields a set of synthetic order instances, each containing customer demographic attributes, address, and order details, including order category, value, and order weight. 
+The resulting dataset provides a comprehensive basis for subsequent delivery optimisation and strategy design.
+
+
+\subsection{Verification and Validation}
+\subsubsection{Verification and Validation Framework}
+
+In this study, we evaluated the proposed framework through both verification and validation. 
+Verification evaluates the correctness of the framework itself, i.e., whether the framework's logic and methodology conform to the design specifications.
+Validation, on the other hand, assesses whether the proposed framework achieves the intended objectives, that is, whether the generated results resemble the real-world data. 
+Since our focus is on statistically and aggregately validating the synthetic data, we employed an indicator that measures the similarity of different distributions, specifically, the Jensen-Shannon Divergence (JSD) for quantitative assessment. 
+
+Based on the proposed population-order two-step framework, the verification and validation process is conducted on two levels.
+First, verification is evaluated as the simulation scale increases. We examine whether the marginal distributions of the synthetic data (population, orders) converge toward those of the real-world data. 
+The assessment of asymptotic consistency demonstrates the correctness of the synthetic instances.
+Second, validation is evaluated once the asymptotic results reach convergence.
+Smaller differences between the synthetic instances and real-world data, ideally below a practical threshold, indicate higher fidelity and validate the effectiveness of the framework.
+
+
+\subsubsection{Measure of Distribution Similarity, Jensen-Shannon Divergence}
+
+Since our focus is on statistically and aggregately validating the synthetic data, we compared several measures to quantify the similarity between distributions. 
+These include the Kullback-Leibler Divergence (KLD) \cite{measure_KLD1951}, Kolmogorov-Smirnov (KS) Statistic \cite{measure_KSStatistic1951},  Cosine Similarity \cite{measure_Cosine1975}, Total Variation Distance (TVD) \cite{measure_TVDistance1960} and Jensen-Shannon Divergence (JSD) \cite{measure_JSD1991}.
+
+The KLD measures the information loss or discrepancy between two probability distributions, but it is asymmetric and is sensitive to zero probability. 
+The KS Statistic quantifies the maximum difference between two cumulative distribution functions.
+Cosine Similarity takes the two distributions as vectors and measures the directional similarity between these two vectors.
+The TVD indicator quantifies the maximum absolute difference between two probability distributions.
+The JSD is a symmetric version of KLD that measures divergence relative to the average distribution 
+By mapping both distributions to a midpoint and evaluating the information divergence from it, JSD provides a bounded and symmetric measure.
+It is numerically stable and widely applied for high-dimensional probability distribution comparisons and generative modelling.
+Therefore, in this study, we adopted JSD as the primary indicator for the verification and validation process.
+
+Given two probability distributions \(P\) and \(Q\), the JSD is defined as:
+
+\begin{equation}
+  \label{equ:JSDdefin}
+  \begin{aligned}
+    JSD(P||Q) &= \sqrt{\frac{1}{2}D_{KL}(P||M) + \frac{1}{2}D_{KL}(Q||M) }\\
+    D_{KL}(P||Q) &= \sum_i P(i) \log \frac{P(i)}{Q(i)}\\
+    M &= \frac{1}{2}(P+Q)
+  \end{aligned}
+\end{equation}
+
+where \(M\) is the midpoint distribution and \(D_{KL}\) is the Kullback-Leibler Divergence.
+
+The JSD ranges from 0 (identical distributions) to 1 (completely dissimilar). 
+Smaller JSD values correspond to smaller differences between distributions \(P\) and \(Q\).
+
+
+\subsubsection{Synthetic Population Validation}
+
+In the population validation process, since the synthetic population is generated at the LSOA level, we performed cross-validation using marginal statistics at a higher-level administrative unit, namely the LAD, to ensure that the marginal distributions of different demographic attributes in the synthetic data align with those of the real population. 
+
+Specifically, the populations of all LSOAs within each LAD were aggregated, and the resulting distributions were compared against the actual population distributions reported in the census statistics. 
+When calculating the JSD, we first obtained the JSD value for each individual LAD. 
+In total, 14 LADs in Inner London were evaluated, each producing a JSD value. 
+The final validation result for the ILA was then defined as the average JSD across these 14 LADs.
+Considering the priority sampling approach described in Section \ref{sec:samplePop}, which favours high-proportion population groups, the generated population for a given population size is deterministic rather than stochastic.
+Therefore, validation was conducted across a range of synthetic population sizes, and JSD was computed to examine whether it decreases as the population scale increases, thereby demonstrating the asymptotic consistency of the synthetic population.
+
+
+\subsubsection{Synthetic Order Validation}
+\label{sec:method_order_val}
+
+For order validation, two aspects were considered. 
+First, the synthetic orders themselves were validated by comparing their category distributions with those of actual order data. 
+By comparing the category distributions of synthetic orders with those of the real UK online orders \cite{statista_uk_shopping25_statistic}, the realism and plausibility of the synthetic orders were quantitatively assessed.
+Second, customer-based validation was performed to assess whether the attribute distributions (e.g., age) of potential online customers, identified through the FIS framework, match those of real-world UK online customers \cite{statista_uk_shopping25_statistic}. 
+To ensure objectivity, independent third-party data was employed, ensuring the data used for validation is independent from the data used in the model fitting process. 
+
+Since the generation of synthetic orders depends only on customer characteristics rather than spatial locations, we selected the ILA synthetic population with the highest data accuracy as the basis for order simulation. 
+Specifically, orders were generated by sampling different proportions of individuals from this synthetic population.
+
+During the sampling process, the order generation involves Monte Carlo sampling based on specified distributions and their probabilities, which inevitably introduces randomness. 
+To avoid evaluation results being biased by the stochastic nature of a single random process, we employed multiple random seeds to repeatedly conduct sampling and order generation under the same population size. 
+For each run, the JSD was computed, thereby ensuring more robust and reliable evaluation results.
+
+
+\section{Case Study and Results}
+\label{sec:results}
+
+\subsection{Research Area}
+This project is focused on the Inner London Area (ILA), a term often used in statistics and planning, including 14 boroughs in the London Plan \shortcite{london2021plan}. Different from the area in Central London and the Greater London Area (GLA), it is a core group of boroughs that form the central part of the capital.
+The comparison of ILA and GLA is shown in Figure \ref{fig:london_map}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Figures/london_map.pdf}
+  \caption{Inner London Area and Greater London Area}
+  \label{fig:london_map}
+\end{figure}
+
+\subsection{Synthetic Population}
+
+We employed the IPF method for various population scales, with the relevant algorithm parameters and experimental parameters listed in the Table \ref{tab:simu_par_pop}. 
+
+\begin{table}[htbp]
+  \centering
+  \caption{Algorithm and Experimental Parameters}
+  \label{tab:simu_par_pop}
+  \begin{tabularx}{0.9\textwidth}{l X X}
+    \toprule
+    \textbf{Type} & \textbf{Name} & \textbf{Value} \\
+    \midrule
+    IPF Parameter & Max Iteration & 1,000 \\
+    IPF Parameter & Stop Threshold & 0.001 \\
+    Experimental Parameter & Population Size & 10 values for each magnitude ($10^3 - 2 \times 10^6$) \\
+    Experimental Parameter & Output Format & csv, gpkg, shp files\\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+The final synthetic population data is presented in the form of a dataframe in different file formats, encompassing all population feature variables, with the example data shown in the Table \ref{tab:synpop_sample}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Synthetic Population Data Sample ($2\times10^6$)}
+  \label{tab:synpop_sample}
+  \begin{tabular}{l c c c c c}
+    \toprule
+    \textbf{Person ID} & \textbf{Age} & \textbf{Sex} & \textbf{\makecell{Economic \\ Activity}} & $\mathbf{\cdots}$ & \textbf{Location*} \\
+    \midrule
+    ID\_00000000 & 0 & 0 & 0 & $\cdots$ & POINT (526470.3633 183249.8411) \\
+    ID\_00000001 & 0 & 0 & 0 & $\cdots$ & POINT (526442.3315 183184.6906) \\
+    ID\_00000002 & 0 & 0 & 0 & $\cdots$ & POINT (526368.7540 183190.1211) \\
+    $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\cdots$ & $\vdots$ \\
+    ID\_01999998 & 3 & 1 & 0 & $\cdots$ & POINT (522008.0873 172633.4987) \\
+    ID\_01999999 & 3 & 1 & 0 & $\cdots$ & POINT (522375.9823 173094.8757) \\
+    \bottomrule
+  \end{tabular}
+  \vspace{1mm} \par
+  \textit{*Note: Coordinates are expressed in the EPSG:27700 coordinate system, consistent with the commonly used coordinate reference system in the UK.}
+\end{table}
+
+The JSD curves computed for different population sizes are presented in the Figure \ref{fig:jsd-pop}.
+Figure \ref{fig:jsd-pop} shows the change in JSD for various population attributes across different synthetic population sizes. 
+Overall, as the synthetic population size increases, the JSD for nearly all attributes decreases. 
+This indicates that with larger sizes, the generated population distribution across each feature becomes closer to the real-world population, reflecting improved simulation accuracy of the model.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\textwidth]{Figures/jsd-pop.pdf}
+  \caption{Jensen-Shannon Divergence by Demographic Features}
+  \label{fig:jsd-pop}
+\end{figure}
+
+For specific attributes, gender has the lowest JSD and drops quickly even at smaller population sizes, suggesting that the gender distribution is easy to simulate accurately. 
+Age and ethnic group start with relatively high JSD values but decrease significantly as population size increases, especially between $10^4$ and $10^5$. 
+Economic status shows minimal change, with JSD starting relatively low and decreasing only slightly, indicating that its distribution is either easier to simulate or inherently less variable. 
+The number of cars and marital status initially have higher JSD values but gradually decrease as the population grows, stabilising once the population reaches above $10^5$.
+
+At small population sizes ($10^3$ to $10^4$), JSD for age, ethnicity, marital status, and number of cars is relatively high, showing that these attributes are harder to simulate accurately with limited samples. 
+When the population exceeds $10^5$, JSD for most attributes approaches below 0.05, indicating that the generated distributions nearly match the real distributions and that increasing population size leads to progressively consistent simulation results.
+
+In conclusion, as the population size increases, the differences between generated and real distributions shrink across all attributes, showing that the synthetic method performs robustly with large samples, achieving verification. 
+Furthermore, the asymptotic values are all below 0.1, with most feature values falling below 0.05, further confirming the effectiveness of the IPF method in generating synthetic populations and demonstrating successful validation.
+
+
+\subsection{Synthetic Order}
+
+In the e-commerce modelling process, we extracted and integrated the IF-THEN rules for each step of the FIS from the data sources mentioned in Table \ref{tab:uk_ecommerce_sources}. 
+The complete set of MFs for each variable is listed in Appendix Table \ref{tab:membership_fuc}. 
+Part of the rules are listed in the Table \ref{tab:rlue_base_avail}, \ref{tab:rlue_base_freq}, \ref{tab:rlue_base_cate}. 
+The complete rules can be found in Appendix \ref{tab:rlue_base_avail_all}, \ref{tab:rlue_base_freq_all}, and \ref{tab:rlue_base_cate_all}, respectively.
+
+\begin{table}[htbp]
+  \centering
+  \caption{IF-THEN Rule Base for Availability (Partial)}
+  \label{tab:rlue_base_avail}
+  \begin{tabularx}{0.9\textwidth}{c X}
+    \toprule
+    \textbf{No.} & \textbf{Rule} \\
+    \midrule
+    1 & IF age[\textit{young\_adult}] OR age[\textit{adult}] THEN response[\textit{high}] \\
+    2 & IF economic\_activity[\textit{employed}] OR economic\_activity[\textit{unemployed}] THEN response[\textit{medium}] \\
+    3 & IF age[\textit{senior}] AND economic\_activity[\textit{inactive}] THEN response[\textit{low}] \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{IF-THEN Rule Base for Frequency (Partial)}
+  \label{tab:rlue_base_freq}
+  \begin{tabularx}{0.9\textwidth}{c c X}
+    \toprule
+    \textbf{Type} & \textbf{No.} & \textbf{Rule} \\
+    \midrule
+    Multi Daily & 1 & IF age[\textit{young\_adult}] THEN response[\textit{low}] \\
+    Multi Daily & 2 & IF age[\textit{senior}] THEN response[\textit{low}] \\
+    Weekly 2-3 Times & 1 & IF age[\textit{young\_adult}] THEN response[\textit{medium}] \\
+    Weekly 2-3 Times & 2 & IF age[\textit{adult}] THEN response[\textit{high}] \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{IF-THEN Rule Base for Order Category (Partial)}
+  \label{tab:rlue_base_cate}
+  \begin{tabularx}{0.9\textwidth}{c c X}
+    \toprule
+    \textbf{Type} & \textbf{No.} & \textbf{Rule} \\
+    \midrule
+    Cloth \& Personal Care & 1 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{high}] \\
+    Cloth \& Personal Care & 2 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{high}] \\
+    High-Value Electronics & 1 & IF age[\textit{young\_adult}] AND sex[\textit{female}] THEN response[\textit{low}] \\
+    High-Value Electronics & 2 & IF age[\textit{adult}] AND sex[\textit{female}] THEN response[\textit{medium}] \\
+
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+After modelling the e-commerce behaviour, we used the FIS to generate synthetic orders based on synthetic population.
+We sampled different percentages of the population from the population with the highest simulation accuracy, specifically, $2\times10^6$, and applied the proposed multi-level FIS.
+Algorithm and experimental parameters are shown in Table \ref{tab:simu_par_ord}. 
+
+
+\begin{table}[htbp]
+  \centering
+  \caption{Algorithm and Experimental Parameters}
+  \label{tab:simu_par_ord}
+  \begin{tabularx}{0.9\textwidth}{c X X}
+    \toprule
+    \textbf{Type} & \textbf{Name} & \textbf{Value} \\
+    \midrule
+    FIS Parameter & Membership Function & Triangular \\
+    FIS Parameter & AND Aggregation Function & fmin \\
+    FIS Parameter & OR Aggregation Function & fmax \\
+    FIS Parameter & Defuzzification Function & Centroid \\
+    Experimental Parameter & Population Size & 10 values for each magnitude ($10^3 - 2 \times 10^6$) \\
+    Experimental Parameter & Random Seed & 0, 1, 2, \dots,19, 42 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+We first validated the categories of the orders. 
+We incorporated an independent third-party data source \cite{statista_uk_shopping25_statistic} to obtain the distribution of actual online shopping orders in UK. 
+This distribution was then compared with the synthetic orders generated under different population scales and random seeds. 
+The JSD between the two distributions was computed to assess the fidelity of the synthetic orders, as shown in the Figure \ref{fig:jsd_order}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{Figures/jsd-ord.pdf}
+  \caption{Jenson-Shannon Divergence of Synthetic Order Category}
+  \label{fig:jsd_order}
+\end{figure}
+
+As shown in Figure \ref{fig:jsd_order}, the JSD decreases monotonically with increasing population size, with a particularly rapid decline below 100, indicating that the synthetic orders generated by the FIS framework quickly converge toward the true distribution. 
+Multiple repetitions with different random seeds reveal that, for small sample sizes, especially below 100, the results fluctuate significantly and the synthetic outcomes are unstable. 
+As the simulation scale increases, the JSD gradually stabilises, and for population sizes above 1,000, it remains at a low level (approximately 0.12), demonstrating that larger samples better approximate the true distribution.
+
+Overall, the accuracy of the synthetic instances is closely related to the simulation scale, with larger populations yielding higher-quality synthetic data. 
+The rapid convergence of JSD and its low final value further confirms the effectiveness of the model's verification and validation. 
+As the population size continues to grow, the JSD reaches a plateau around 0.12, suggesting that the error transitions from being dominated by variance due to small sample size to being dominated by structural errors in the FIS framework or data.
+
+The stability threshold indicates that, to achieve instances that fit the real-world order distribution, the synthetic population size should at least be larger than 100, beyond which variance is effectively controlled. 
+
+Similarly, we examined the demographic feature distribution of consumers. 
+Since some report indicates that not all individuals choose to engage in online shopping \cite{eurostat_euro_statistics25}, it is necessary to validate the demographic distribution specifically for the actual online shopping population. 
+We summarised the customer attribute statistics under different population scales and random seeds and compared the customer profiles with the reference data from \textit{UK Online Shopping Behavior Report} \cite{statista_uk_shopping25_statistic}.
+The results are shown in Figure \ref{fig:jsd-age}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{Figures/jsd-age.pdf}
+  \caption{Jenson-Shannon Divergence of Customer Age}
+  \label{fig:jsd-age}
+\end{figure}
+
+Figure \ref{fig:jsd-age} shows that as the synthetic population size increases, the JSD values exhibit a general decline and gradually converge, indicating that larger samples provide a closer approximation to the real-world customer profile.
+
+At smaller scales, the JSD values are more dispersed, with some reaching as high as around 0.7. 
+This suggests that when the synthetic population size is insufficient, the generated distributions tend to be unstable and deviate considerably from the actual distribution.
+With increasing scale, the JSD values decrease substantially and become more concentrated. 
+Most results converge within the range of 0.025-0.075, suggesting that the discrepancies between the synthetic and real distributions are significantly reduced. 
+At larger scales, the JSD values stabilise around 0.05 with minimal fluctuations, indicating that further increases in population size yield limited improvements in fidelity. 
+
+The results demonstrate that as the synthetic population size increases, the generated customer age distribution progressively approaches the real-world distribution, thereby validating the effectiveness of the proposed FIS method in this demographic dimension.
+When the population size reaches 1,000 or above, the JSD values consistently remain below 0.1, suggesting sufficient accuracy of the synthetic orders. 
+Accordingly, for downstream applications aiming to approximate real-world last-mile scenarios, a synthetic population size exceeding 1,000 is recommended.
+
+In summary, based on the validation of both order categories and consumer demographic characteristics, the results collectively confirm the effectiveness of the proposed FIS framework. 
+As indicated by the JSD results shown in Figure \ref{fig:jsd_order} and Figure \ref{fig:jsd-age}, a population size greater than 1,000 is recommended in practical applications to ensure sufficient similarity to the real-world scenarios in downstream simulation.
+
+
+\subsection{Web-based Result Visualisation}
+
+After generating the synthetic population and order instance, a web-based visualisation method was adopted to present the results. 
+To address the issue of point over-density on the webpage, a sampling strategy was applied, and it is user-defined, ensuring that the displayed data remains both representative and visually interpretable.
+The visualisation on the webpage for the synthetic population and the synthetic orders are demonstrated as Figure \ref{fig:map_synpop} and Figure \ref{fig:map_synord}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\textwidth]{Figures/synpop-map.pdf}
+  \caption{Web-based Visualisation of Synthetic Population}
+  \label{fig:map_synpop}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\textwidth]{Figures/synord-map.pdf}
+  \caption{Web-based Visualisation of Synthetic Order}
+  \label{fig:map_synord}
+\end{figure}
+
+
+\section{Conclusion and Discussion}
+\label{sec:conclusion}
+
+This study addresses the data privacy challenges in last-mile delivery orders and the limitations of existing order demand data, which often neglect consumer purchase preferences and demographic characteristics. 
+We propose a population-feature-based method for generating synthetic orders, consisting of two main steps. 
+First, a synthetic population of the ILA are generated using census data. 
+Second, a FIS is constructed to model online purchase preferences based on demographic features, following a three-stage online shopping logic chain: online availability, purchase frequency, and product category. 
+By integrating this FIS with the MC sampling framework, synthetic orders are generated that align with real-world population preferences.
+
+Cross-validation with independent third-party data demonstrates that the proposed method effectively captures actual consumer purchase behaviour, confirming its validity in modelling both order generation and demographic-based purchase preferences. 
+Validation results also indicate that, in subsequent logistics simulations, if the goal is to obtain order volumes that better reflect market behaviour, it is advisable to set the number of generated synthetic order instances to larger than 100. 
+This scale ensures that the generated orders are consistent with the shopping preferences of the ILA population.
+
+This study exhibits strong extensibility. 
+Methodologically, it proposes an open-source, reproducible scenario generation pipeline tailored to ILA, capable of producing synthetic order instances at specified scales on demand. 
+At the model level, it incorporates consumer demographic characteristics and is supported by an extensible rule base, making it easy to transfer and expand.
+  other purchase preferences, enabling the simulation of more diverse and realistic scenarios.
+
+In the future, this framework can incorporate additional data sources and delivery preferences, such as delivery time windows, delivery modes, and delivery locations (e.g., self-pickup or parcel lockers), can be further incorporated. 
+By calibrating these choices with data from industry reports, the framework can produce more fine-grained and realistic order-simulation instances, supporting downstream last-mile logistics simulations and generating synthetic orders at varying scales to accommodate different scenarios. 
+
+
+\section*{Acknowledgement}
+
+Time has flown by in the blink of an eye, and before I realised it, my master's journey has come to an end. 
+From spring to autumn, I have finally reached the completion of my dissertation. 
+Here, I would like to express my heartfelt gratitude to all those who have supported and helped me along the way.
+
+First and foremost, I would like to express my deepest gratitude to my supervisor, Professor Angeloudis. 
+His passion for academic research and teaching has deeply inspired me and strengthened my determination to choose him as my dissertation advisor. 
+His profound insights into logistics, as well as his invaluable guidance throughout this process, have provided me with tremendous inspiration and support.
+
+I am also sincerely grateful to Keyang, our doctoral mentor. 
+His rigorous academic attitude has always been a model for me. 
+Whenever I encountered setbacks or confusion, he encouraged me with patience, pointed out deficiencies in my ideas, content, and direction, and helped me to continuously improve and refine my research. 
+His support has been of great significance to the successful completion of my dissertation. 
+I sincerely wish him every success in his future endeavours.
+
+I would also like to thank the friends I met during my MSc studies. Conversations with you not only helped me relieve pressure during stressful times but also often sparked new ideas for my project. 
+In particular, I would like to thank Luis, Thomas, and Sami for your companionship and support, which have given me precious friendship on this academic journey. 
+I wish you all the very best in the future.
+
+Finally, I owe my deepest gratitude to my family. 
+In those late nights of writing and struggling with ideas, it was your understanding, encouragement, and love that kept me going. 
+Without your support, I would not have been able to achieve what I have today.
+
+\bibliographystyle{authordate2}
+\bibliography{refs}
+
+\newpage
+\appendix
+\input{appendix.tex}
+
+
+\end{document}

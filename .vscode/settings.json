@@ -1,0 +1,20 @@
+{
+    "cSpell.words": [
+        "'enages",
+        "coolwarm",
+        "Fazio",
+        "howpublished",
+        "Ignaccolo",
+        "Istituto",
+        "M",
+        "Nazionale",
+        "skiprows"
+    ],
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "python-envs.pythonProjects": [],
+    "cSpell.language": "en-GB",
+    "latex-workshop.latex.autoBuild.interval": 10000,
+    "editor.renderWhitespace": "all",
+    "latex-workshop.synctex.afterBuild.enabled": false
+}

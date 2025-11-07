@@ -10,7 +10,7 @@ Master Dissertation Project at Imperial College London.
 This project demonstrates a complete workflow from synthetic population to synthetic order generation. 
 It provides a reusable foundation for further logistics analysis and modeling.
 
-![Project Framework](dissertation/Dissertation%20Figures/study_framework.png)
+![Project Framework](dissertation/Dissertation%20Figures/study_framework_landscape.png)
 *Figure: Project Framework*
 
 

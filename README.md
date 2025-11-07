@@ -1,7 +1,9 @@
 # A Data-Efficient Demand Generation Framework for Multi-Agent Last-Mile Delivery via Fuzzy Logic
 
 Master Dissertation Project at Imperial College London.
+
 **Program Name:** Transport with Data Science
+
 **Supervisor:** Prof. Panagiotis Angeloudis
 
 ## Project Overview
@@ -31,3 +33,8 @@ It provides a reusable foundation for further logistics analysis and modeling.
 
 ## Results / Visualization
 The notebook outputs synthetic population results and corresponding visualizations, providing an intuitive view of the outcomes.
+
+
+![Synthetic Order Map](dissertation/Dissertation%20Figures/synord-map.svg)
+
+![Synthetic Population Map](dissertation/Dissertation Figures/synpop-map_page-0001.jpg)
